@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal M3 · Exame Parcial 2 — Recuperação · Prof. Anderson Daniel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Sora:wght@400;500;600&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#081220; --panel:#0e1d2c; --panel2:#132a3d; --line:rgba(120,190,230,.16);
+  --txt:#eaf6ff; --mut:#8fa8bd; --cyan:#58e6ff; --volt:#ffe14d; --pink:#ff5ea8;
+  --grn:#7dff8a; --good:#4ade80; --bad:#ff6b81; --blue:#6db1ff;
+  --disp:'Syne',sans-serif; --body:'Sora',sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);background:var(--ink);color:var(--txt);line-height:1.65;overflow-x:hidden;min-height:100vh;
+  display:flex;flex-direction:column;
+  background-image:
+    radial-gradient(900px 500px at 80% -10%, rgba(88,230,255,.08), transparent 60%),
+    radial-gradient(700px 500px at -10% 80%, rgba(255,94,168,.06), transparent 60%),
+    linear-gradient(rgba(100,180,220,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100,180,220,.05) 1px, transparent 1px);
+  background-size:auto,auto,44px 44px,44px 44px;
+}
+::selection{background:var(--volt);color:#1a1603}
+.noise{position:fixed;inset:0;z-index:120;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px;width:100%}
+.formulas span{position:absolute;font-family:var(--mono);color:rgba(143,168,189,.3);font-size:13px;pointer-events:none;animation:floaty 7s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+.topbar{position:sticky;top:0;z-index:90;background:rgba(8,18,32,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:12px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:800;letter-spacing:.5px;font-size:15px}
+.brand .gear{width:32px;height:32px;border:2px solid var(--cyan);border-radius:6px;display:grid;place-items:center;color:var(--cyan);font-family:var(--mono);font-size:12px;transform:rotate(-6deg);animation:spinback 8s linear infinite}
+@keyframes spinback{0%,86%{transform:rotate(-6deg)}93%{transform:rotate(354deg)}100%{transform:rotate(-6deg)}}
+.brand small{display:block;font-family:var(--mono);font-weight:400;font-size:10px;color:var(--mut);letter-spacing:1.5px}
+.topbar .chip{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--mut);letter-spacing:2px;border:1px solid var(--line);padding:6px 10px;border-radius:5px;background:var(--panel)}
+.topbar .chip b{color:var(--volt)}
+
+main{flex:1;display:flex;flex-direction:column;padding:60px 0 40px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--cyan);display:flex;align-items:center;gap:10px;justify-content:center}
+.kicker::before,.kicker::after{content:"";width:34px;height:2px;background:var(--cyan)}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(2rem,5.6vw,3.6rem);text-align:center;line-height:1.08;margin:16px 0 8px;letter-spacing:-1px}
+h1 .acc{color:var(--volt)}
+.sub{text-align:center;font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--mut);text-transform:uppercase}
+.intro{text-align:center;color:var(--mut);max-width:640px;margin:18px auto 34px}
+.intro b{color:var(--txt)}
+
+.atom-panel{width:290px;margin:0 auto 44px;border:1px dashed var(--line);border-radius:10px;padding:10px;background:rgba(14,29,44,.6);position:relative}
+.atom-panel::before{content:"+";position:absolute;top:-10px;left:-6px;font-family:var(--mono);color:var(--mut)}
+.atom-panel::after{content:"+";position:absolute;bottom:-11px;right:-5px;font-family:var(--mono);color:var(--mut)}
+.atom-panel canvas{width:100%;height:auto;display:block}
+.atom-cap{font-family:var(--mono);font-size:9.5px;letter-spacing:2px;color:var(--mut);text-align:center;margin-top:6px;text-transform:uppercase}
+.stamp{position:absolute;top:-14px;right:10px;border:2px solid var(--bad);color:var(--bad);font-family:var(--mono);font-weight:800;font-size:9.5px;letter-spacing:2px;padding:4px 9px;transform:rotate(7deg);border-radius:4px;background:var(--ink)}
+
+.rota{max-width:880px;margin:0 auto 48px;width:100%}
+.rota h2{font-family:var(--disp);font-weight:800;font-size:clamp(1.5rem,3.4vw,2.2rem);text-align:center;margin-bottom:6px}
+.rota h2 .acc{color:var(--volt)}
+.rota .rsub{text-align:center;font-family:var(--mono);font-size:11.5px;letter-spacing:2.5px;color:var(--cyan);margin-bottom:26px}
+.steps{display:flex;flex-direction:column;gap:12px}
+.step{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:15px 18px;transition:transform .22s,border-color .22s}
+.step:hover{transform:translateX(6px);border-color:rgba(88,230,255,.55)}
+.step .n{flex:none;width:36px;height:36px;background:var(--volt);color:#1a1603;font-family:var(--mono);font-weight:800;display:grid;place-items:center;border-radius:7px;box-shadow:3px 3px 0 rgba(255,225,77,.35)}
+.step p{font-size:14px;color:var(--mut)}
+.step p b{color:var(--txt)}
+.registro{margin-top:20px;border:1px dashed rgba(255,225,77,.5);border-radius:9px;padding:16px 20px;background:rgba(255,225,77,.05)}
+.registro h3{font-family:var(--mono);font-size:11px;letter-spacing:2.5px;color:var(--volt);margin-bottom:10px}
+.registro .linha{font-family:var(--mono);font-size:13px;color:var(--txt);padding:7px 0;border-bottom:1px dashed var(--line);letter-spacing:.5px}
+.registro .linha:last-child{border-bottom:none}
+.registro .linha b{color:var(--volt)}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:880px;margin:0 auto;width:100%}
+.card{position:relative;display:block;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:12px;background:var(--panel);
+  padding:30px 28px;transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 200px at 50% -20%,rgba(88,230,255,.09),transparent 70%);opacity:0;transition:opacity .3s}
+.card:hover{transform:translateY(-8px);border-color:var(--cyan);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.card:hover::before{opacity:1}
+.card.hot:hover{border-color:var(--volt)}
+.card.hot::before{background:radial-gradient(400px 200px at 50% -20%,rgba(255,225,77,.1),transparent 70%)}
+.card .tag{position:absolute;top:20px;right:-36px;background:var(--volt);color:#1a1603;font-family:var(--mono);font-weight:800;font-size:10px;letter-spacing:2px;padding:5px 42px;transform:rotate(35deg)}
+.card .filenum{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--mut);border:1px dashed var(--line);display:inline-block;padding:4px 10px;border-radius:4px;margin-bottom:16px}
+.card h2{font-family:var(--disp);font-weight:800;font-size:clamp(1.35rem,2.8vw,1.8rem);margin-bottom:4px;letter-spacing:-.3px}
+.card h2 span{color:var(--cyan)}
+.card.hot h2 span{color:var(--volt)}
+.card .role{font-family:var(--mono);font-size:11px;letter-spacing:2.5px;color:var(--mut);margin-bottom:14px;text-transform:uppercase}
+.card p.desc{color:var(--mut);font-size:14px;margin-bottom:16px}
+.card ul{list-style:none;margin-bottom:22px}
+.card li{font-size:13.5px;color:var(--mut);padding:5px 0 5px 24px;position:relative}
+.card li::before{content:"▸";position:absolute;left:4px;color:var(--cyan);font-family:var(--mono)}
+.card.hot li::before{color:var(--volt)}
+.card li b{color:var(--txt)}
+.go{display:inline-flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:700;font-size:14px;letter-spacing:.6px;color:#03202a;
+  background:var(--cyan);border:2px solid #03202a;padding:12px 20px;border-radius:7px;box-shadow:4px 4px 0 rgba(88,230,255,.3);transition:.18s}
+.card.hot .go{color:#1a1603;background:var(--volt);box-shadow:4px 4px 0 rgba(255,225,77,.35)}
+.card:hover .go{transform:translate(-2px,-2px);box-shadow:7px 7px 0 rgba(88,230,255,.4)}
+.card.hot:hover .go{box-shadow:7px 7px 0 rgba(255,225,77,.45)}
+
+.envio{max-width:880px;margin:48px auto 0;width:100%;border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:24px 26px}
+.envio h3{font-family:var(--mono);font-size:11px;letter-spacing:2.5px;color:var(--good);margin-bottom:12px}
+.envio li{font-size:14px;color:var(--mut);margin:7px 0 7px 20px}
+.envio li b{color:var(--txt)}
+
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:rgba(14,29,44,.6);padding:13px 0;margin:52px 0 0}
+.mtrack{display:flex;gap:56px;width:max-content;animation:scrollx 50s linear infinite;font-family:var(--mono);font-size:13px;color:var(--mut);white-space:nowrap}
+.marquee:hover .mtrack{animation-play-state:paused}
+.mtrack b{color:var(--volt)}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+
+.quote{text-align:center;margin:44px auto 0;max-width:640px;color:var(--mut);font-size:15px;font-style:italic;padding:0 20px}
+.quote b{color:var(--volt);font-style:normal}
+.quote .who{display:block;margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--cyan);font-style:normal}
+footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;background:rgba(14,29,44,.5);margin-top:52px}
+footer .f-prof{font-family:var(--disp);font-weight:800;font-size:18px}
+footer .f-meta{font-family:var(--mono);font-size:10.5px;color:rgba(143,168,189,.6);letter-spacing:1.5px;margin-top:6px}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+:focus-visible{outline:3px solid var(--volt);outline-offset:3px}
+
+@media(max-width:760px){
+  .cards{grid-template-columns:1fr}
+  .topbar .chip{display:none}
+  .formulas span{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  .mtrack{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="gear">M3</span><span>FÍSICA · 3º ANO · EP2<small>PROF. ANDERSON DANIEL</small></span></div>
+    <span class="chip">PORTAL DE <b>RECUPERAÇÃO</b></span>
+  </div>
+</header>
+
+<main>
+  <div class="wrap" style="position:relative">
+    <div aria-hidden="true" style="position:relative;height:0">
+      <span class="formulas" style="position:absolute;inset:0">
+        <span style="top:40px;left:2%">E = m·c²</span>
+        <span style="top:120px;left:90%;animation-delay:1.4s">E = h·f</span>
+        <span style="top:240px;left:6%;animation-delay:2.2s">U = R·i</span>
+        <span style="top:200px;left:86%;animation-delay:.7s">F = q·v·B·senθ</span>
+      </span>
+    </div>
+
+    <p class="kicker">PROVA DE RECUPERAÇÃO · TURMA M3</p>
+    <h1><span id="scr1" data-text="EXAME PARCIAL 2">EXAME PARCIAL 2</span><br>
+        <span class="acc" id="scr2" data-text="DO ELÉTRON À ENERGIA NUCLEAR">DO ELÉTRON À ENERGIA NUCLEAR</span></h1>
+    <p class="sub">Eletrodinâmica · Eletromagnetismo · Física Moderna</p>
+    <p class="intro">Dois simulados interativos para você <b>recuperar sua nota com segurança</b>: faça o <b>Simulado 1</b>, aprenda com cada explicação e depois mostre sua evolução no <b>Simulado 2 Ampliado</b>.</p>
+
+    <div class="atom-panel reveal" aria-hidden="true">
+      <div class="stamp">RECUPERAÇÃO</div>
+      <canvas id="atom" width="560" height="300"></canvas>
+      <p class="atom-cap">Fig. 01 — modelo de Bohr · cada salto, um fóton de evolução</p>
+    </div>
+
+    <!-- ===== ROTEIRO ===== -->
+    <section class="rota reveal">
+      <h2>ROTEIRO DE <span class="acc">RECUPERAÇÃO</span></h2>
+      <p class="rsub">SIGA A ORDEM — ELA FOI PENSADA PARA VOCÊ EVOLUIR</p>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><p>Abra o <b>Simulado 1</b> e responda as 10 questões com calma. Use os sliders para experimentar antes de marcar. <b>Anote sua nota.</b></p></div>
+        <div class="step"><span class="n">2</span><p>Conferiu? Agora leia <b>cada explicação</b> — inclusive das que você acertou. É aqui que o conceito "encuca". 📖</p></div>
+        <div class="step"><span class="n">3</span><p>Abra o <b>Simulado 2 Ampliado</b> e comece pela <b>Rota de Revisão</b> (os 5 pilares): Eletrodinâmica, Força Magnética, Indução, Física Quântica e Radioatividade.</p></div>
+        <div class="step"><span class="n">4</span><p>Faça o Simulado 2 Ampliado explorando as simulações e <b>tire print do Diagnóstico Final</b> com a sua nota.</p></div>
+        <div class="step"><span class="n">5</span><p>Compare as duas notas. <b>Se a segunda for maior, você evoluiu</b> — e é essa evolução que conta na recuperação! 🚀</p></div>
+      </div>
+      <div class="registro">
+        <h3>📝 REGISTRE SUAS NOTAS</h3>
+        <div class="linha">SIMULADO 1 (sim1.ep2.fis.m3.html) → NOTA: _________ / 10,0</div>
+        <div class="linha">SIMULADO 2 AMPLIADO (sim2.ep2.fis.m3.html) → NOTA: _________ / 10,0</div>
+        <div class="linha"><b>EVOLUÇÃO</b> = nota 2 − nota 1 = _________ pontos 📈</div>
+      </div>
+    </section>
+
+    <!-- ===== CARDS ===== -->
+    <div class="cards">
+      <a class="card reveal" href="sim1.ep2.fis.m3.html">
+        <span class="filenum">📄 sim1.ep2.fis.m3.html</span>
+        <h2>SIMULADO <span>1</span></h2>
+        <p class="role">Ponto de partida · prova de recuperação</p>
+        <p class="desc">Exame Parcial 2 — 3º Ano: a versão original para você fazer o primeiro diagnóstico do que já domina.</p>
+        <ul>
+          <li><b>10 questões</b> interativas do 3º Ano</li>
+          <li>Respostas e explicações <b>liberadas após a tentativa</b></li>
+          <li>Sliders para explorar as <b>simulações</b></li>
+          <li>Ideal para <b>medir seu ponto de partida</b></li>
+        </ul>
+        <span class="go">ABRIR SIMULADO 1 →</span>
+      </a>
+
+      <a class="card hot reveal" style="transition-delay:.12s" href="sim2.ep2.fis.m3.html">
+        <span class="tag">RECOMENDADO</span>
+        <span class="filenum">📄 sim2.ep2.fis.m3.html</span>
+        <h2>SIMULADO 2 <span>AMPLIADO</span></h2>
+        <p class="role">Versão ampliada · revisão + diagnóstico</p>
+        <p class="desc">O mesmo exame, reconstruído e ampliado para você revisar os conceitos e provar sua evolução.</p>
+        <ul>
+          <li><b>11 simulações</b> animadas em tempo real</li>
+          <li><b>Rota de Revisão</b> — os 5 pilares do 3º Ano</li>
+          <li>Gabarito <b>passo a passo</b> + dicas para o exame oficial</li>
+          <li><b>Nota animada</b> e diagnóstico final por questão</li>
+        </ul>
+        <span class="go">ABRIR SIMULADO 2 AMPLIADO →</span>
+      </a>
+    </div>
+
+    <!-- ===== O QUE ENVIAR ===== -->
+    <section class="envio reveal">
+      <h3>✔ O QUE ENVIAR NA ATIVIDADE DO GOOGLE CLASSROOM</h3>
+      <ul>
+        <li>📸 <b>Print da nota do Simulado 1</b> (tela final);</li>
+        <li>📸 <b>Print do Diagnóstico Final do Simulado 2 Ampliado</b> (nota + análise);</li>
+        <li>💬 Um comentário curto: <b>qual questão você errou no Simulado 1 e o que aprendeu</b> com o passo a passo do Simulado 2 Ampliado.</li>
+      </ul>
+    </section>
+
+    <p class="quote reveal">
+      "Recuperar não é recomeçar — é <b>revisitar com mais experiência</b>. Assim como um elétron absorve energia para saltar de nível, absorva cada explicação e dê o seu salto."
+      <span class="who">— PROF. ANDERSON DANIEL · TURMA M3</span>
+    </p>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="mtrack" id="mtrack">
+      <span>E = mc²: <b>um grama de esforço vale uma enormidade de resultado</b>.</span>
+      <span>Como o fóton: sua energia depende da <b>frequência</b> — intensidade sem direção não arranca elétrons.</span>
+      <span>Bohr ensinou: evolução acontece em <b>saltos</b>. Dê o seu hoje. ⚛️</span>
+      <span>Meia-vida: o que você estuda hoje <b>não desaparece</b> — metade fica para sempre.</span>
+      <span>Prof. Anderson Daniel: <b>"A constância vence o talento quando o talento não é constante."</b></span>
+      <span>Lenz: toda mudança gera resistência. <b>Insista — a corrente vai fluir.</b></span>
+      <span>Turma M3: vocês são a geração que <b>transforma massa em energia</b>.</span>
+      <span>Respire, monte o circuito mental e <b>confie no processo</b>.</span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="f-prof">Prof. Anderson Daniel</p>
+    <p class="f-meta">FÍSICA · TURMA M3 · 3º ANO · EXAME PARCIAL 2 — ELETRODINÂMICA · ELETROMAGNETISMO · FÍSICA MODERNA · E = m·c²</p>
+  </div>
+</footer>
+
+<script>
+'use strict';
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const obs = new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}
+}),{threshold:.14});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+function scramble(el){
+  const txt = el.dataset.text;
+  if(reduced){el.textContent = txt;return;}
+  const chars='#ΣΔΩπ%&$@!?01<>*';let fr=0;
+  const iv=setInterval(()=>{
+    let out='';
+    for(let i=0;i<txt.length;i++){
+      out += txt[i]===' ' ? ' ' : (i<fr/2.4 ? txt[i] : chars[(Math.random()*chars.length)|0]);
+    }
+    el.textContent=out;fr++;
+    if(fr/2.4>txt.length){el.textContent=txt;clearInterval(iv);}
+  },30);
+}
+setTimeout(()=>scramble(document.getElementById('scr1')),300);
+setTimeout(()=>scramble(document.getElementById('scr2')),700);
+
+const mt=document.getElementById('mtrack');mt.innerHTML+=mt.innerHTML;
+
+/* átomo de Bohr */
+const cv=document.getElementById('atom');
+const dpr=Math.min(window.devicePixelRatio||1,2);
+cv.width=560*dpr;cv.height=300*dpr;
+const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);
+const CYAN='#58e6ff',PINK='#ff5ea8',VOLT='#ffe14d',MUT='#8fa8bd';
+function draw(t){
+  c.clearRect(0,0,560,300);
+  const cx=280,cy=150;
+  c.fillStyle=PINK;
+  [[-6,-4],[4,-7],[-2,5],[7,3],[0,-1],[-8,4]].forEach(o=>{c.beginPath();c.arc(cx+o[0],cy+o[1],6,0,7);c.fill();});
+  const orbs=[55,90,125],ws=[1.9,1.25,0.85];
+  orbs.forEach((r,i)=>{
+    c.strokeStyle='rgba(88,230,255,.4)';c.lineWidth=1.5;
+    c.beginPath();c.ellipse(cx,cy,r,r*0.94,0,0,7);c.stroke();
+    const a=reduced? i*2.1 : t*ws[i]+i*2.1;
+    c.fillStyle=CYAN;c.beginPath();c.arc(cx+r*Math.cos(a),cy+r*0.94*Math.sin(a),5.5,0,7);c.fill();});
+  if(!reduced){
+    const ph=(t%3)/3;
+    c.strokeStyle=`rgba(255,225,77,${1-ph})`;c.lineWidth=2;
+    c.beginPath();c.arc(cx,cy,90+ph*70,0,7);c.stroke();
+    const dir=-0.5,px=cx+90*Math.cos(-0.9)+ph*180*Math.cos(dir),py=cy+85*Math.sin(-0.9)+ph*180*Math.sin(dir);
+    c.strokeStyle=VOLT;c.lineWidth=2;c.beginPath();
+    for(let u=0;u<=26;u+=2){
+      const ox=px-26*Math.cos(dir)+u*Math.cos(dir),oy=py-26*Math.sin(dir)+u*Math.sin(dir)+5*Math.sin(u*0.8+t*6);
+      u===0?c.moveTo(ox,oy):c.lineTo(ox,oy);}
+    c.stroke();}
+  c.font='600 11px "JetBrains Mono",monospace';c.fillStyle=MUT;c.textAlign='center';
+  c.fillText('elétron salta de nível → emite FÓTON',280,286);c.textAlign='left';
+}
+if(!reduced){(function loop(now){draw(now/1000);requestAnimationFrame(loop);})(performance.now());}
+else draw(0);
+</script>
+</body>
+</html>

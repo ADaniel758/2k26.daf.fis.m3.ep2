@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exame Parcial 2 – 3º Ano (Recuperação Interativa)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            padding: 30px;
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #0b3b5c;
+            border-left: 8px solid #2563eb;
+            padding-left: 20px;
+            margin-bottom: 6px;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-bottom: 30px;
+            padding-left: 28px;
+        }
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding: 16px 0;
+            border-top: 2px solid #e2e8f0;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .nav button {
+            background: #eef2f6;
+            border: none;
+            border-radius: 40px;
+            padding: 10px 20px;
+            font-weight: 600;
+            color: #1e293b;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.95rem;
+        }
+        .nav button:hover {
+            background: #cbd5e1;
+            transform: scale(1.02);
+        }
+        .nav button.active {
+            background: #2563eb;
+            color: white;
+            box-shadow: 0 4px 8px rgba(37,99,235,0.3);
+        }
+        .question-panel {
+            display: none;
+            animation: fade 0.3s ease;
+        }
+        .question-panel.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% { opacity: 0.4; transform: translateY(6px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .question-box {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #e2e8f0;
+        }
+        .question-box h2 {
+            font-size: 1.6rem;
+            color: #0b3b5c;
+            margin-bottom: 12px;
+        }
+        .enunciado {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            background: #eef2ff;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border-left: 6px solid #2563eb;
+            margin-bottom: 20px;
+        }
+        .alternativas {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .alternativas button {
+            background: white;
+            border: 2px solid #d1d9e6;
+            border-radius: 12px;
+            padding: 12px 18px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.15s;
+            font-weight: 500;
+        }
+        .alternativas button:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+        .alternativas button.selecionada {
+            border-color: #2563eb;
+            background: #dbeafe;
+        }
+        .alternativas button.correta {
+            border-color: #16a34a;
+            background: #dcfce7;
+        }
+        .alternativas button.errada {
+            border-color: #dc2626;
+            background: #fee2e2;
+        }
+        .btn-confirmar {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 28px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 12px;
+        }
+        .btn-confirmar:hover {
+            background: #1d4ed8;
+            transform: scale(1.02);
+        }
+        .btn-confirmar:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .feedback {
+            margin-top: 16px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: none;
+        }
+        .feedback.correto {
+            background: #dcfce7;
+            border: 1px solid #16a34a;
+            color: #166534;
+            display: block;
+        }
+        .feedback.incorreto {
+            background: #fee2e2;
+            border: 1px solid #dc2626;
+            color: #991b1b;
+            display: block;
+        }
+        .dissertativa textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #d1d9e6;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            margin: 12px 0;
+        }
+        .dissertativa textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+        .conceito, .resolucao {
+            margin-top: 24px;
+            padding: 16px 20px;
+            background: #f1f5f9;
+            border-radius: 16px;
+            display: none;
+        }
+        .conceito.revelado, .resolucao.revelado {
+            display: block;
+            animation: fade 0.4s ease;
+        }
+        .conceito h3, .resolucao h3 {
+            font-size: 1.3rem;
+            color: #1e293b;
+            border-bottom: 2px solid #cbd5e1;
+            padding-bottom: 6px;
+            margin-bottom: 16px;
+        }
+        .conceito p, .resolucao p, .resolucao li {
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        .resolucao .step {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #e9edf2;
+        }
+        .simulacao {
+            margin: 25px 0;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #d9e2ef;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .simulacao canvas {
+            display: block;
+            margin: 0 auto;
+            background: #f1f5f9;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            aspect-ratio: 600/300;
+            border: 1px solid #cbd5e1;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 16px;
+            align-items: center;
+        }
+        .controls label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+        .controls input[type="range"] {
+            width: 140px;
+        }
+        .controls span {
+            min-width: 40px;
+            font-weight: 600;
+            color: #0b3b5c;
+        }
+        .footnote {
+            margin-top: 30px;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 16px; }
+            h1 { font-size: 1.8rem; }
+            .nav button { padding: 6px 14px; font-size: 0.8rem; }
+            .controls input[type="range"] { width: 100px; }
+        }
+        .badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            border-radius: 30px;
+            padding: 2px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📘 Exame Parcial 2 – 3º Ano</h1>
+    <div class="subtitle">Prova de Recuperação • 10 questões interativas • Responda e confira</div>
+
+    <div class="nav" id="navButtons"></div>
+    <div id="questionPanels"></div>
+
+    <div class="footnote">
+        ⚡ Use os sliders para explorar as simulações. Respostas e explicações são liberadas após sua tentativa.
+    </div>
+</div>
+
+<script>
+    // ===== DADOS DAS QUESTÕES =====
+    const questions = [
+        // Questão 1 (MC – Espelho convexo)
+        {
+            id: 1,
+            type: 'MC',
+            title: 'Espelho Convexo',
+            enunciado: 'Em um supermercado, um espelho de segurança é instalado em um corredor para permitir que os clientes vejam ao redor de uma esquina, evitando colisões com carrinhos. Esse espelho forma imagens virtuais, direitas e menores que os objetos, abrangendo um grande campo visual. O espelho utilizado é classificado como:',
+            alternativas: [
+                'A) Côncavo, com objeto entre o foco e o vértice.',
+                'B) Côncavo, com objeto além do centro.',
+                'C) Convexo.',
+                'D) Plano.',
+                'E) Côncavo, com objeto sobre o foco.'
+            ],
+            gabarito: 'C',
+            conceito: 'O espelho convexo sempre fornece imagens virtuais, direitas e menores que o objeto, independentemente da posição do objeto. Além disso, proporciona um amplo campo visual, sendo ideal para segurança e visibilidade em ângulos mortos.',
+            resolucao: 'A alternativa correta é a **C** – Convexo.',
+            simType: 'convexo'
+        },
+        // Questão 2 (MC – Pêndulo)
+        {
+            id: 2,
+            type: 'MC',
+            title: 'Pêndulo Simples',
+            enunciado: 'Em um laboratório de física, um pêndulo simples de comprimento 1,6 m é posto a oscilar em um local onde a aceleração da gravidade é 10 m/s². Utilizando π = 3,14, o período de oscilação desse pêndulo é aproximadamente:',
+            alternativas: [
+                'A) 0,8 s',
+                'B) 1,6 s',
+                'C) 2,5 s',
+                'D) 3,2 s',
+                'E) 4,0 s'
+            ],
+            gabarito: 'C',
+            conceito: 'O período de um pêndulo simples é dado por T = 2π√(L/g), onde L é o comprimento e g a aceleração da gravidade. Quanto maior o comprimento, maior o período.',
+            resolucao: 'T = 2·3,14·√(1,6/10) = 6,28·√0,16 = 6,28·0,4 = 2,512 s ≈ 2,5 s. Alternativa **C**.',
+            simType: 'pendulo'
+        },
+        // Questão 3 (MC – Potência elétrica)
+        {
+            id: 3,
+            type: 'MC',
+            title: 'Potência Elétrica',
+            enunciado: 'Uma lâmpada fluorescente compacta (LFC) de 15 W é utilizada em uma residência. O valor 15 W indica que:',
+            alternativas: [
+                'A) a lâmpada dissipa 15 J de energia a cada segundo.',
+                'B) a lâmpada é percorrida por uma corrente de 15 A.',
+                'C) a lâmpada opera com tensão de 15 V.',
+                'D) a lâmpada tem resistência de 15 Ω.',
+                'E) a lâmpada produz 15 cal de calor por minuto.'
+            ],
+            gabarito: 'A',
+            conceito: 'Potência é a energia transformada ou consumida por unidade de tempo. 1 W = 1 J/s. Portanto, 15 W = 15 J a cada segundo.',
+            resolucao: 'Alternativa **A**.',
+            simType: 'potencia'
+        },
+        // Questão 4 (MC – Conservação de energia)
+        {
+            id: 4,
+            type: 'MC',
+            title: 'Conservação da Energia Mecânica',
+            enunciado: 'Em um parque de diversões, um carrinho de montanha-russa parte do repouso de uma altura de 20 m em relação ao solo. Desprezando perdas por atrito, a velocidade do carrinho ao passar pelo ponto mais baixo da trajetória é: (Considere g = 10 m/s²)',
+            alternativas: [
+                'A) 200 m/s',
+                'B) 40 m/s',
+                'C) 20 m/s',
+                'D) 10 m/s',
+                'E) 5 m/s'
+            ],
+            gabarito: 'C',
+            conceito: 'Pela conservação da energia mecânica, a energia potencial gravitacional (mgh) se converte integralmente em energia cinética (mv²/2). A massa se cancela: v = √(2gh).',
+            resolucao: 'v = √(2·10·20) = √400 = 20 m/s. Alternativa **C**.',
+            simType: 'energia'
+        },
+        // Questão 5 (MC – Fibra óptica)
+        {
+            id: 5,
+            type: 'MC',
+            title: 'Fibra Óptica – Reflexão Total',
+            enunciado: 'A transmissão de dados por fibra óptica utiliza o princípio da reflexão total interna. Para que isso ocorra, é necessário que:',
+            alternativas: [
+                'A) a luz incida com ângulo menor que o ângulo limite.',
+                'B) o núcleo da fibra tenha índice de refração menor que o da casca.',
+                'C) a luz se propague do meio mais refringente para o menos refringente com ângulo superior ao limite.',
+                'D) a luz seja absorvida pela casca e reemitida.',
+                'E) o comprimento de onda da luz seja alterado.'
+            ],
+            gabarito: 'C',
+            conceito: 'A reflexão total interna ocorre quando a luz passa de um meio mais refringente (núcleo) para outro menos refringente (casca) com ângulo de incidência maior que o ângulo limite. Assim, toda a luz é refletida de volta ao núcleo.',
+            resolucao: 'Alternativa **C**.',
+            simType: 'fibra'
+        },
+        // Questão 6 (Dissertativa – Espelho côncavo)
+        {
+            id: 6,
+            type: 'DIS',
+            title: 'Espelho Côncavo – Imagem Virtual',
+            enunciado: 'Em um experimento de óptica, um estudante posiciona um objeto diante de um espelho côncavo e observa que a imagem formada é virtual, direita e ampliada. Identifique a região onde o objeto se encontra em relação aos pontos notáveis do espelho (foco e centro de curvatura).',
+            respostaEsperada: 'entre o foco e o vértice',
+            palavrasChave: ['entre', 'foco', 'vértice'],
+            conceito: 'Um espelho côncavo forma imagem virtual, direita e ampliada apenas quando o objeto está posicionado entre o foco (F) e o vértice (V).',
+            resolucao: 'A imagem é virtual, direita e maior → objeto entre o foco e o vértice.',
+            simType: 'convexo' // reutilizamos para demonstrar
+        },
+        // Questão 7 (Dissertativa – Roldana fixa)
+        {
+            id: 7,
+            type: 'DIS',
+            title: 'Roldana Fixa',
+            enunciado: 'Uma roldana fixa é usada para levantar um saco de cimento de peso 80 N. Despreze o atrito e o peso da corda. Calcule a força que a pessoa deve fazer na corda para manter o saco em equilíbrio ou elevá-lo com velocidade constante.',
+            respostaEsperada: '80 N',
+            palavrasChave: ['80', 'N'],
+            conceito: 'Uma roldana fixa apenas muda a direção da força aplicada; não oferece vantagem mecânica. A força necessária é igual ao peso do objeto.',
+            resolucao: 'Força = peso = 80 N.',
+            simType: 'roldana'
+        },
+        // Questão 8 (Dissertativa – Associação de resistores)
+        {
+            id: 8,
+            type: 'DIS',
+            title: 'Associação de Resistores',
+            enunciado: 'Em um circuito elétrico, três resistores de 6 Ω cada são associados da seguinte forma: dois são ligados em paralelo e esse conjunto é colocado em série com o terceiro resistor. Determine a resistência equivalente total do circuito.',
+            respostaEsperada: '9 Ω',
+            palavrasChave: ['9', 'Ω'],
+            conceito: 'Resistores em paralelo: 1/Rp = 1/R1 + 1/R2. Depois, soma-se com o resistor em série.',
+            resolucao: 'Paralelo: 1/Rp = 1/6 + 1/6 = 2/6 = 1/3 → Rp = 3 Ω. Série com 6 Ω: Req = 3 + 6 = 9 Ω.',
+            simType: 'circuito'
+        },
+        // Questão 9 (Dissertativa – Potência elétrica)
+        {
+            id: 9,
+            type: 'DIS',
+            title: 'Potência Elétrica (Cálculo)',
+            enunciado: 'Um aquecedor elétrico é ligado a uma tensão de 220 V e consome uma corrente de 10 A. Calcule a potência elétrica dissipada por esse aquecedor.',
+            respostaEsperada: '2200 W',
+            palavrasChave: ['2200', 'W'],
+            conceito: 'Potência elétrica P = U · i, onde U é a tensão e i a corrente.',
+            resolucao: 'P = 220 · 10 = 2200 W (ou 2,2 kW).',
+            simType: 'potencia'
+        },
+        // Questão 10 (Dissertativa – Roldanas móveis)
+        {
+            id: 10,
+            type: 'DIS',
+            title: 'Roldanas Móveis – Vantagem Mecânica',
+            enunciado: 'Em uma obra, um operário precisa elevar um bloco de concreto de peso 2400 N utilizando um sistema de roldanas móveis. Sabendo que ele pode aplicar no máximo 300 N de força, determine a quantidade mínima de roldanas móveis necessárias para realizar a tarefa.',
+            respostaEsperada: '3 roldanas',
+            palavrasChave: ['3', 'roldanas'],
+            conceito: 'Cada roldana móvel dobra a vantagem mecânica: F = P / 2ⁿ. Isolando n: 2ⁿ ≥ P/F.',
+            resolucao: '2400 / 2ⁿ ≤ 300 → 2ⁿ ≥ 8 → n ≥ 3. São necessárias 3 roldanas móveis.',
+            simType: 'roldana'
+        }
+    ];
+
+    // ===== CONSTRUÇÃO DA NAVEGAÇÃO E PAINÉIS =====
+    const nav = document.getElementById('navButtons');
+    const panels = document.getElementById('questionPanels');
+
+    let htmlNav = '';
+    let htmlPanels = '';
+
+    questions.forEach((q) => {
+        const id = q.id;
+        const label = `Q${id}${q.type === 'MC' ? '' : ' (D)'}`;
+        htmlNav += `<button data-target="q${id}" onclick="showQuestion('q${id}')">${label}</button>`;
+
+        let panel = `<div id="q${id}" class="question-panel">`;
+        panel += `<div class="question-box">`;
+        panel += `<h2>Questão ${id} ${q.type === 'MC' ? '– Múltipla Escolha' : '– Dissertativa'}</h2>`;
+        panel += `<div class="enunciado"><strong>📌 Enunciado:</strong> ${q.enunciado}</div>`;
+
+        // Área de resposta interativa
+        if (q.type === 'MC') {
+            panel += `<div class="alternativas" id="alt-${id}">`;
+            q.alternativas.forEach((alt, idx) => {
+                const letra = String.fromCharCode(65 + idx);
+                panel += `<button data-letra="${letra}" onclick="selecionarAlternativa(${id}, '${letra}')">${alt}</button>`;
+            });
+            panel += `</div>`;
+            panel += `<button class="btn-confirmar" id="btn-confirmar-${id}" onclick="confirmarMC(${id})" disabled>Confirmar resposta</button>`;
+            panel += `<div class="feedback" id="feedback-${id}"></div>`;
+        } else {
+            panel += `<div class="dissertativa">`;
+            panel += `<textarea id="resposta-${id}" placeholder="Digite sua resposta aqui..."></textarea>`;
+            panel += `<button class="btn-confirmar" onclick="confirmarDIS(${id})">Verificar resposta</button>`;
+            panel += `<div class="feedback" id="feedback-${id}"></div>`;
+            panel += `</div>`;
+        }
+
+        // Conceito e resolução (ocultos)
+        panel += `<div class="conceito" id="conceito-${id}"><h3>📖 Conceito fundamental</h3><p>${q.conceito}</p></div>`;
+        panel += `<div class="resolucao" id="resolucao-${id}"><h3>🧠 Resolução passo a passo</h3>`;
+        const steps = q.resolucao.split('\n').filter(s => s.trim() !== '');
+        steps.forEach(step => {
+            panel += `<div class="step">${step}</div>`;
+        });
+        panel += `</div>`;
+
+        // Simulação
+        if (q.simType) {
+            panel += `<div class="simulacao"><h3>🎮 Simulação interativa</h3>`;
+            panel += `<canvas id="sim${id}" width="600" height="300"></canvas>`;
+            panel += `<div class="controls" id="controls${id}"></div>`;
+            panel += `</div>`;
+        }
+
+        panel += `</div></div>`;
+        htmlPanels += panel;
+    });
+
+    nav.innerHTML = htmlNav;
+    panels.innerHTML = htmlPanels;
+
+    // ===== VARIÁVEIS GLOBAIS =====
+    let alternativaSelecionada = {};
+    if (!window._simIds) window._simIds = {};
+
+    // ===== FUNÇÕES DE CONTROLE =====
+    function selecionarAlternativa(id, letra) {
+        const container = document.getElementById(`alt-${id}`);
+        const botoes = container.querySelectorAll('button');
+        botoes.forEach(btn => {
+            btn.classList.remove('selecionada');
+            if (btn.dataset.letra === letra) btn.classList.add('selecionada');
+        });
+        alternativaSelecionada[id] = letra;
+        document.getElementById(`btn-confirmar-${id}`).disabled = false;
+        const fb = document.getElementById(`feedback-${id}`);
+        fb.className = 'feedback';
+        fb.textContent = '';
+    }
+
+    function confirmarMC(id) {
+        const q = questions.find(q => q.id === id);
+        const letraEscolhida = alternativaSelecionada[id];
+        if (!letraEscolhida) return;
+        const fb = document.getElementById(`feedback-${id}`);
+        const correto = letraEscolhida === q.gabarito;
+        if (correto) {
+            fb.className = 'feedback correto';
+            fb.textContent = '✅ Correto! Parabéns.';
+        } else {
+            fb.className = 'feedback incorreto';
+            fb.textContent = `❌ Incorreto. A alternativa correta é ${q.gabarito}.`;
+        }
+        document.getElementById(`conceito-${id}`).classList.add('revelado');
+        document.getElementById(`resolucao-${id}`).classList.add('revelado');
+        document.getElementById(`btn-confirmar-${id}`).disabled = true;
+        const botoes = document.getElementById(`alt-${id}`).querySelectorAll('button');
+        botoes.forEach(btn => {
+            btn.disabled = true;
+            if (btn.dataset.letra === q.gabarito) btn.classList.add('correta');
+            else if (btn.dataset.letra === letraEscolhida && !correto) btn.classList.add('errada');
+        });
+    }
+
+    function confirmarDIS(id) {
+        const q = questions.find(q => q.id === id);
+        const resposta = document.getElementById(`resposta-${id}`).value.trim();
+        const fb = document.getElementById(`feedback-${id}`);
+        if (!resposta) {
+            fb.className = 'feedback incorreto';
+            fb.textContent = '⚠️ Digite uma resposta.';
+            return;
+        }
+        const palavras = q.palavrasChave || [];
+        const ok = palavras.every(p => resposta.toLowerCase().includes(p.toLowerCase()));
+        if (ok) {
+            fb.className = 'feedback correto';
+            fb.textContent = '✅ Muito bom! Confira a resolução.';
+        } else {
+            fb.className = 'feedback incorreto';
+            fb.textContent = `❌ Reveja sua resposta. Dica: inclua valores e unidades. Resposta esperada: "${q.respostaEsperada}".`;
+        }
+        document.getElementById(`conceito-${id}`).classList.add('revelado');
+        document.getElementById(`resolucao-${id}`).classList.add('revelado');
+    }
+
+    // ===== NAVEGAÇÃO =====
+    function showQuestion(id) {
+        document.querySelectorAll('.question-panel').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav button').forEach(el => el.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) target.classList.add('active');
+        const btn = document.querySelector(`.nav button[data-target="${id}"]`);
+        if (btn) btn.classList.add('active');
+
+        // Parar animações antigas
+        if (window._simIds) {
+            Object.values(window._simIds).forEach(id => cancelAnimationFrame(id));
+        }
+        window._simIds = {};
+
+        const panel = document.getElementById(id);
+        if (panel) {
+            const canvas = panel.querySelector('canvas');
+            if (canvas) {
+                const qId = parseInt(id.replace('q',''));
+                const q = questions.find(q => q.id === qId);
+                if (q && q.simType) iniciarSimulacao(canvas, q.simType, qId);
+            }
+        }
+    }
+
+    // ===== SIMULAÇÕES =====
+    function iniciarSimulacao(canvas, tipo, qId) {
+        const ctx = canvas.getContext('2d');
+        const W = canvas.width, H = canvas.height;
+        let animId = null;
+        const controlsDiv = document.getElementById(`controls${qId}`);
+        controlsDiv.innerHTML = '';
+
+        if (tipo === 'convexo') {
+            // Simulação de espelho convexo: objeto na frente, imagem menor e virtual
+            let distObj = 120; // distância do objeto ao espelho (em pixels)
+            const label = document.createElement('label');
+            label.innerHTML = 'Distância do objeto (pixels): <input type="range" min="40" max="250" value="120" step="5"> <span id="valDist">120</span>';
+            controlsDiv.appendChild(label);
+            const slider = label.querySelector('input');
+            const span = label.querySelector('span');
+            const info = document.createElement('span');
+            info.textContent = 'Imagem virtual, direita e menor';
+            controlsDiv.appendChild(info);
+            slider.addEventListener('input', function() {
+                distObj = parseFloat(this.value);
+                span.textContent = distObj;
+            });
+
+            function desenhar() {
+                ctx.clearRect(0, 0, W, H);
+                // Espelho convexo (curva)
+                ctx.beginPath();
+                ctx.arc(W-80, H/2, 80, -Math.PI/2, Math.PI/2);
+                ctx.strokeStyle = '#1e293b';
+                ctx.lineWidth = 4;
+                ctx.stroke();
+                ctx.fillStyle = '#cbd5e1';
+                ctx.fill();
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '12px sans-serif';
+                ctx.fillText('Espelho convexo', W-150, 30);
+                // Objeto (seta para cima)
+                const objX = W - 80 - distObj;
+                ctx.fillStyle = '#2563eb';
+                ctx.fillRect(objX-5, H/2-50, 10, 50);
+                ctx.fillStyle = '#2563eb';
+                ctx.font = '14px sans-serif';
+                ctx.fillText('Objeto', objX-25, H/2-60);
+                // Imagem (virtual, atrás do espelho, menor)
+                const fator = 0.5; // imagem menor
+                const imgX = W - 80 + distObj * 0.3;
+                ctx.fillStyle = '#dc2626';
+                ctx.fillRect(imgX-3, H/2-25, 6, 25);
+                ctx.fillStyle = '#dc2626';
+                ctx.font = '14px sans-serif';
+                ctx.fillText('Imagem (virtual)', imgX-25, H/2-35);
+                // Linha tracejada indicando virtual
+                ctx.setLineDash([5,5]);
+                ctx.beginPath();
+                ctx.moveTo(W-80, H/2-80);
+                ctx.lineTo(imgX+10, H/2-40);
+                ctx.strokeStyle = '#dc2626';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                ctx.setLineDash([]);
+                animId = requestAnimationFrame(desenhar);
+            }
+            desenhar();
+        }
+        else if (tipo === 'pendulo') {
+            let L = 1.6; // comprimento em metros
+            let g = 10;
+            let ang = 0.3; // amplitude
+            let tempo = 0;
+            const label = document.createElement('label');
+            label.innerHTML = 'Comprimento (m): <input type="range" min="0.5" max="3.0" value="1.6" step="0.1"> <span id="valL">1.6</span>';
+            controlsDiv.appendChild(label);
+            const slider = label.querySelector('input');
+            const span = label.querySelector('span');
+            const info = document.createElement('span');
+            info.textContent = 'T = 2.51 s';
+            controlsDiv.appendChild(info);
+            slider.addEventListener('input', function() {
+                L = parseFloat(this.value);
+                span.textContent = L;
+                const T = 2 * 3.14 * Math.sqrt(L/g);
+                info.textContent = `T = ${T.toFixed(2)} s`;
+            });
+
+            function desenhar() {
+                ctx.clearRect(0, 0, W, H);
+                const pivotX = W/2, pivotY = 30;
+                const lenPx = 80 + L * 40; // escala visual
+                const theta = ang * Math.sin(tempo * Math.sqrt(g/L));
+                const x = pivotX + lenPx * Math.sin(theta);
+                const y = pivotY + lenPx * Math.cos(theta);
+                // Fio
+                ctx.beginPath();
+                ctx.moveTo(pivotX, pivotY);
+                ctx.lineTo(x, y);
+                ctx.strokeStyle = '#1e293b';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                // Massa
+                ctx.beginPath();
+                ctx.arc(x, y, 12, 0, 2*Math.PI);
+                ctx.fillStyle = '#2563eb';
+                ctx.fill();
+                ctx.strokeStyle = '#1e40af';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '12px sans-serif';
+                ctx.fillText('Pêndulo', pivotX-30, pivotY-10);
+                ctx.fillText(`L = ${L.toFixed(1)} m`, pivotX+20, pivotY+20);
+                tempo += 0.05;
+                animId = requestAnimationFrame(desenhar);
+            }
+            desenhar();
+        }
+        else if (tipo === 'energia') {
+            // Montanha-russa – conversão energia potencial em cinética
+            let h = 20;
+            const label = document.createElement('label');
+            label.innerHTML = 'Altura (m): <input type="range" min="5" max="40" value="20" step="1"> <span id="valH">20</span>';
+            controlsDiv.appendChild(label);
+            const slider = label.querySelector('input');
+            const span = label.querySelector('span');
+            const info = document.createElement('span');
+            info.textContent = 'v = 20.0 m/s';
+            controlsDiv.appendChild(info);
+            slider.addEventListener('input', function() {
+                h = parseFloat(this.value);
+                span.textContent = h;
+                const v = Math.sqrt(2 * 10 * h);
+                info.textContent = `v = ${v.toFixed(1)} m/s`;
+            });
+
+            function desenhar() {
+                ctx.clearRect(0, 0, W, H);
+                // Perfil da montanha russa
+                ctx.beginPath();
+                ctx.moveTo(20, H-30);
+                ctx.quadraticCurveTo(100, H-30 - h*3, W/2, H-30);
+                ctx.quadraticCurveTo(W-100, H-30 - h*1.5, W-20, H-30);
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 4;
+                ctx.stroke();
+                // Carrinho no topo
+                ctx.fillStyle = '#dc2626';
+                ctx.fillRect(80, H-30 - h*3 - 8, 20, 16);
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '12px sans-serif';
+                ctx.fillText('Topo', 70, H-30 - h*3 - 20);
+                // Carrinho na base (ponto mais baixo)
+                ctx.fillStyle = '#16a34a';
+                ctx.fillRect(W/2-10, H-30-8, 20, 16);
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '12px sans-serif';
+                ctx.fillText('Base', W/2-15, H-30-20);
+                // Mostrar velocidade
+                const v = Math.sqrt(2 * 10 * h);
+                ctx.fillStyle = '#2563eb';
+                ctx.font = '14px sans-serif';
+                ctx.fillText(`v = ${v.toFixed(1)} m/s`, W/2-60, 40);
+                animId = requestAnimationFrame(desenhar);
+            }
+            desenhar();
+        }
+        else if (tipo === 'fibra') {
+            // Reflexão total interna
+            let angulo = 50;
+            const label = document.createElement('label');
+            label.innerHTML = 'Ângulo de incidência (°): <input type="range" min="10" max="80" value="50" step="1"> <span id="valAng">50</span>';
+            controlsDiv.appendChild(label);
+            const slider = label.querySelector('input');
+            const span = label.querySelector('span');
+            const info = document.createElement('span');
+            info.textContent = 'Reflexão total? Sim (ângulo > limite)';
+            controlsDiv.appendChild(info);
+            const angLimite = 42; // para n1/n2 = 1.5
+            slider.addEventListener('input', function() {
+                angulo = parseFloat(this.value);
+                span.textContent = angulo;
+                if (angulo > angLimite) {
+                    info.textContent = '✅ Reflexão total interna (ângulo > limite)';
+                } else {
+                    info.textContent = '❌ Sem reflexão total (ângulo < limite)';
+                }
+            });
+
+            function desenhar() {
+                ctx.clearRect(0, 0, W, H);
+                // Interface núcleo-casca
+                ctx.fillStyle = '#cbd5e1';
+                ctx.fillRect(0, H/2-60, W, 120);
+                ctx.fillStyle = '#94a3b8';
+                ctx.fillRect(0, H/2-40, W, 80);
+                ctx.fillStyle = '#475569';
+                ctx.fillRect(0, H/2-20, W, 40);
+                ctx.fillStyle = 'white';
+                ctx.font = '12px sans-serif';
+                ctx.fillText('Núcleo (mais refringente)', 20, H/2-50);
+                ctx.fillText('Casca (menos refringente)', 20, H/2+30);
+                // Raio incidente
+                const angRad = angulo * Math.PI / 180;
+                const x0 = 40;
+                const y0 = H/2 - 30;
+                const dx = 100 * Math.cos(angRad);
+                const dy = 100 * Math.sin(angRad);
+                ctx.beginPath();
+                ctx.moveTo(x0, y0);
+                ctx.lineTo(x0 + dx, y0 + dy);
+                ctx.strokeStyle = '#dc2626';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                // Raio refletido (se total)
+                if (angulo > angLimite) {
+                    ctx.beginPath();
+                    ctx.moveTo(x0 + dx, y0 + dy);
+                    ctx.lineTo(x0 + dx - dx*0.8, y0 + dy + dy*0.8);
+                    ctx.strokeStyle = '#16a34a';
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                    ctx.fillStyle = '#16a34a';
+                    ctx.font = '12px sans-serif';
+                    ctx.fillText('Reflexão total', x0+dx-60, y0+dy+30);
+                } else {
+                    // refração (saindo)
+                    ctx.beginPath();
+                    ctx.moveTo(x0 + dx, y0 + dy);
+                    ctx.lineTo(x0 + dx + 60, y0 + dy + 20);
+                    ctx.strokeStyle = '#2563eb';
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                    ctx.fillStyle = '#2563eb';
+                    ctx.font = '12px sans-serif';
+                    ctx.fillText('Refração (escapa)', x0+dx+10, y0+dy+10);
+                }
+                // Ângulo
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '12px sans-serif';
+                ctx.fillText(`θ = ${angulo}°`, 10, 30);
+                animId = requestAnimationFrame(desenhar);
+            }
+            desenhar();
+        }
+        else if (tipo === 'roldana') {
+            // Sistema de roldanas móveis
+            let n = 1;
+            const label = document.createElement('label');
+            label.innerHTML = 'Nº de roldanas móveis: <input type="range" min="0" max="5" value="1" step="1"> <span id="valN">1</span>';
+            controlsDiv.appendChild(label);
+            const slider = label.querySelector('input');
+            const span = label.querySelector('span');
+            const info = document.createElement('span');
+            info.textContent = 'Vantagem = 2 → F = P/2';
+            controlsDiv.appendChild(info);
+            slider.addEventListener('input', function() {
+                n = parseInt(this.value);
+                span.textContent = n;
+                const vant = Math.pow(2, n);
+                info.textContent = `Vantagem = ${vant} → F = P/${vant}`;
+            });
+
+            function desenhar() {
+                ctx.clearRect(0, 0, W, H);
+                const P = 2400;
+                const vant = Math.pow(2, n);
+                const F = P / vant;
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '16px sans-serif';
+                ctx.fillText(`Peso = ${P} N`, 20, 40);
+                ctx.fillText(`Roldanas móveis = ${n}`, 20, 70);
+                ctx.fillText(`Força necessária = ${F.toFixed(0)} N`, 20, 100);
+                // Desenho simples de roldanas
+                for (let i=0; i<n; i++) {
+                    const x = 150 + i*60;
+                    const y = 120 + i*30;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 20, 0, 2*Math.PI);
+                    ctx.strokeStyle = '#1e293b';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    ctx.fillStyle = '#cbd5e1';
+                    ctx.fill();
+                    ctx.fillStyle = '#1e293b';
+                    ctx.font = '10px sans-serif';
+                    ctx.fillText(`R${i+1}`, x-6, y+4);
+                }
+                // Seta indicando força
+                ctx.fillStyle = '#16a34a';
+                ctx.font = '14px sans-serif';
+                ctx.fillText(`F = ${F.toFixed(0)} N ↓`, 350, 200);
+                animId = requestAnimationFrame(desenhar);
+            }
+            desenhar();
+        }
+        else if (tipo === 'circuito') {
+            // Associação de resistores
+            let R1 = 6, R2 = 6, R3 = 6;
+            const label = document.createElement('span');
+            label.textContent = 'Resistores: R1=6Ω, R2=6Ω (paralelo), R3=6Ω (série)';
+            controlsDiv.appendChild(label);
+            const info = document.createElement('span');
+            info.textContent = 'Req = 9 Ω';
+            controlsDiv.appendChild(info);
+
+            function desenhar() {
+                ctx.clearRect(0, 0, W, H);
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '16px sans-serif';
+                ctx.fillText('Circuito misto', 20, 30);
+                // Desenho simplificado
+                ctx.fillStyle = '#2563eb';
+                ctx.fillRect(50, 60, 30, 60);
+                ctx.fillStyle = 'white';
+                ctx.font = '12px sans-serif';
+                ctx.fillText('R1=6Ω', 55, 95);
+                ctx.fillStyle = '#2563eb';
+                ctx.fillRect(50, 140, 30, 60);
+                ctx.fillStyle = 'white';
+                ctx.fillText('R2=6Ω', 55, 175);
+                ctx.fillStyle = '#2563eb';
+                ctx.fillRect(180, 60, 30, 140);
+                ctx.fillStyle = 'white';
+                ctx.fillText('R3=6Ω', 185, 135);
+                // Linhas de ligação
+                ctx.beginPath();
+                ctx.moveTo(80, 80);
+                ctx.lineTo(180, 80);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(80, 170);
+                ctx.lineTo(180, 170);
+                ctx.stroke();
+                ctx.fillStyle = '#dc2626';
+                ctx.font = '14px sans-serif';
+                ctx.fillText('Req = 9 Ω', 50, 260);
+                animId = requestAnimationFrame(desenhar);
+            }
+            desenhar();
+        }
+        else if (tipo === 'potencia') {
+            // Potência elétrica – slider interativo
+            let U = 220, i = 10;
+            const labelU = document.createElement('label');
+            labelU.innerHTML = 'Tensão (V): <input type="range" min="100" max="300" value="220" step="5"> <span id="valU">220</span>';
+            controlsDiv.appendChild(labelU);
+            const sliderU = labelU.querySelector('input');
+            const spanU = labelU.querySelector('span');
+            const labelI = document.createElement('label');
+            labelI.innerHTML = 'Corrente (A): <input type="range" min="1" max="20" value="10" step="0.5"> <span id="valI">10</span>';
+            controlsDiv.appendChild(labelI);
+            const sliderI = labelI.querySelector('input');
+            const spanI = labelI.querySelector('span');
+            const info = document.createElement('span');
+            info.textContent = 'P = 2200 W';
+            controlsDiv.appendChild(info);
+            function atualizar() {
+                U = parseFloat(sliderU.value);
+                spanU.textContent = U;
+                i = parseFloat(sliderI.value);
+                spanI.textContent = i;
+                const P = U * i;
+                info.textContent = `P = ${P.toFixed(0)} W`;
+            }
+            sliderU.addEventListener('input', atualizar);
+            sliderI.addEventListener('input', atualizar);
+            atualizar();
+
+            function desenhar() {
+                ctx.clearRect(0, 0, W, H);
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '16px sans-serif';
+                ctx.fillText(`U = ${U} V`, 20, 40);
+                ctx.fillText(`i = ${i} A`, 20, 70);
+                const P = U * i;
+                ctx.fillStyle = '#dc2626';
+                ctx.font = '20px sans-serif';
+                ctx.fillText(`P = ${P.toFixed(0)} W`, 20, 120);
+                // Representação de lâmpada
+                ctx.beginPath();
+                ctx.arc(400, 130, 50, 0, 2*Math.PI);
+                ctx.fillStyle = '#fbbf24';
+                ctx.fill();
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '12px sans-serif';
+                ctx.fillText('Lâmpada', 380, 200);
+                animId = requestAnimationFrame(desenhar);
+            }
+            desenhar();
+        }
+
+        window._simIds[qId] = animId;
+    }
+
+    // Inicializar primeira questão
+    showQuestion('q1');
+</script>
+</body>
+</html>

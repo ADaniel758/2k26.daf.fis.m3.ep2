@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulado 2 Ampliado — Exame Parcial 2 · 3º Ano · Prof. Anderson Daniel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Sora:wght@400;500;600&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ============ IDENTIDADE M3: "ELÉTRONS & QUANTA" ============ */
+:root{
+  --ink:#081220; --panel:#0e1d2c; --panel2:#132a3d; --line:rgba(120,190,230,.16);
+  --txt:#eaf6ff; --mut:#8fa8bd; --cyan:#58e6ff; --volt:#ffe14d; --pink:#ff5ea8;
+  --grn:#7dff8a; --good:#4ade80; --bad:#ff6b81; --blue:#6db1ff;
+  --disp:'Syne',sans-serif; --body:'Sora',sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);background:var(--ink);color:var(--txt);line-height:1.65;overflow-x:hidden;
+  background-image:
+    radial-gradient(900px 500px at 85% -5%, rgba(88,230,255,.07), transparent 60%),
+    radial-gradient(700px 500px at -10% 35%, rgba(255,94,168,.06), transparent 60%),
+    linear-gradient(rgba(100,180,220,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100,180,220,.05) 1px, transparent 1px);
+  background-size:auto,auto,44px 44px,44px 44px;
+}
+::selection{background:var(--volt);color:#1a1603}
+.noise{position:fixed;inset:0;z-index:120;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");}
+.mono{font-family:var(--mono)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+
+.topbar{position:sticky;top:0;z-index:90;background:rgba(8,18,32,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:800;letter-spacing:.5px;font-size:15px}
+.brand .gear{width:30px;height:30px;border:2px solid var(--cyan);border-radius:6px;display:grid;place-items:center;color:var(--cyan);font-family:var(--mono);font-size:12px;transform:rotate(-6deg)}
+.brand small{display:block;font-family:var(--mono);font-weight:400;font-size:10px;color:var(--mut);letter-spacing:1.5px}
+.tstats{margin-left:auto;display:flex;gap:10px;align-items:center}
+.chip{font-family:var(--mono);font-size:11px;letter-spacing:1px;border:1px solid var(--line);padding:6px 10px;border-radius:5px;color:var(--mut);background:var(--panel)}
+.chip b{color:var(--volt)}
+.chip.aq b{color:var(--cyan)}
+.ptrack{height:3px;background:var(--panel2)}
+.pfill{height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--volt));transition:width .6s cubic-bezier(.2,.8,.2,1)}
+
+.hero{position:relative;padding:64px 0 54px;overflow:hidden}
+.formulas{position:absolute;inset:0;pointer-events:none;font-family:var(--mono);color:rgba(143,168,189,.32);font-size:14px}
+.formulas span{position:absolute;animation:floaty 7s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.12fr .88fr;gap:44px;align-items:center}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--cyan);display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:34px;height:2px;background:var(--cyan)}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(2.3rem,6vw,4.2rem);line-height:1.03;margin:14px 0 6px;letter-spacing:-1px}
+h1 .acc{color:var(--volt)}
+.h-sub{font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--mut);text-transform:uppercase}
+.h-desc{margin:18px 0 20px;color:var(--mut);max-width:520px}
+.h-desc b{color:var(--txt)}
+.prof-chip{display:inline-flex;align-items:center;gap:10px;border:1px dashed rgba(255,225,77,.5);padding:8px 14px;border-radius:6px;font-size:13px;margin-bottom:20px;background:rgba(255,225,77,.06)}
+.prof-chip .dot{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--volt),#ffb84d);display:grid;place-items:center;color:#1a1603;font-family:var(--disp);font-weight:800;font-size:13px}
+.instructions{border:1px dashed var(--line);border-radius:8px;padding:16px 18px;background:rgba(14,29,44,.75);margin-bottom:22px}
+.instructions h3{font-family:var(--mono);font-size:11px;letter-spacing:2.5px;color:var(--cyan);margin-bottom:10px}
+.instructions li{font-size:13.5px;color:var(--mut);margin:6px 0 6px 18px}
+.instructions li b{color:var(--txt)}
+.assinatura{margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--mut);letter-spacing:1px;border-top:1px dashed var(--line);padding-top:10px}
+.btnrow{display:flex;gap:14px;flex-wrap:wrap}
+.btn{font-family:var(--disp);font-weight:700;font-size:14px;letter-spacing:.6px;color:#1a1603;
+  background:var(--volt);border:2px solid #1a1603;padding:13px 22px;border-radius:7px;cursor:pointer;
+  box-shadow:5px 5px 0 rgba(255,225,77,.3);transition:transform .18s ease, box-shadow .18s ease;text-decoration:none;display:inline-block}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 rgba(255,225,77,.4)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(255,225,77,.35)}
+.btn.ghost{background:transparent;color:var(--cyan);border-color:var(--cyan);box-shadow:5px 5px 0 rgba(88,230,255,.2)}
+.btn.ghost:hover{box-shadow:8px 8px 0 rgba(88,230,255,.3)}
+.atom-panel{border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,var(--panel),#0a1626);padding:14px;position:relative}
+.atom-panel::before,.atom-panel::after{content:"+";position:absolute;font-family:var(--mono);color:var(--mut);font-size:14px}
+.atom-panel::before{top:-9px;left:-6px}.atom-panel::after{bottom:-11px;right:-5px}
+.atom-panel canvas{width:100%;height:auto;display:block}
+.atom-cap{font-family:var(--mono);font-size:10.5px;letter-spacing:2px;color:var(--mut);text-align:center;margin-top:8px;text-transform:uppercase}
+.stamp{position:absolute;top:-16px;right:18px;border:2px solid var(--bad);color:var(--bad);font-family:var(--mono);font-weight:800;font-size:11px;letter-spacing:2px;padding:6px 12px;transform:rotate(7deg);border-radius:4px;background:var(--ink)}
+
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:rgba(14,29,44,.6);padding:13px 0}
+.mtrack{display:flex;gap:56px;width:max-content;animation:scrollx 50s linear infinite;font-family:var(--mono);font-size:13px;color:var(--mut);white-space:nowrap}
+.marquee:hover .mtrack{animation-play-state:paused}
+.mtrack b{color:var(--volt)}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+
+section{padding:70px 0}
+.sec-head{margin-bottom:36px}
+.sec-kick{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--cyan)}
+h2{font-family:var(--disp);font-weight:800;font-size:clamp(1.8rem,4vw,2.7rem);letter-spacing:-.5px;margin-top:8px}
+h2 .acc{color:var(--volt)}
+
+.rev-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:start}
+.rev-sticky{position:sticky;top:86px}
+.rev-sticky p{color:var(--mut);margin:14px 0 22px;font-size:15px}
+.rev-index{display:flex;flex-direction:column;gap:8px}
+.rev-index a{font-family:var(--mono);font-size:12.5px;letter-spacing:1px;color:var(--mut);text-decoration:none;border:1px solid var(--line);padding:9px 13px;border-radius:6px;transition:.2s;display:flex;gap:10px}
+.rev-index a:hover{color:var(--volt);border-color:var(--volt);transform:translateX(5px)}
+.rev-index a b{color:var(--cyan)}
+.pillars{display:flex;flex-direction:column;gap:22px}
+.pillar{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:24px 26px;position:relative;transition:transform .25s ease,border-color .25s ease}
+.pillar:hover{transform:translateX(6px);border-color:rgba(88,230,255,.5)}
+.pillar .pnum{position:absolute;top:-13px;left:20px;background:var(--volt);color:#1a1603;font-family:var(--mono);font-weight:800;font-size:11px;padding:3px 10px;border-radius:4px;letter-spacing:1px}
+.pillar h3{font-family:var(--disp);font-size:20px;margin-bottom:8px}
+.fchips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
+.fchip{font-family:var(--mono);font-size:12px;color:var(--cyan);border:1px dashed rgba(88,230,255,.45);padding:4px 10px;border-radius:5px}
+.pillar ol{margin:0 0 12px 20px;color:var(--mut);font-size:14px}
+.pillar ol li{margin:5px 0}
+.pillar ol li b{color:var(--txt)}
+.trap{border-left:3px solid var(--bad);background:rgba(255,107,129,.07);padding:10px 14px;border-radius:0 6px 6px 0;font-size:13.5px;color:#ffc9d3}
+.trap b{color:var(--bad);font-family:var(--mono);font-size:11px;letter-spacing:2px}
+
+#prova{border-top:1px solid var(--line)}
+.qcard{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-bottom:34px;position:relative;transition:border-color .3s}
+.qcard:hover{border-color:rgba(88,230,255,.45)}
+.qcard::before,.qcard::after{content:"+";position:absolute;font-family:var(--mono);color:rgba(143,168,189,.55);font-size:15px}
+.qcard::before{top:-10px;left:-7px}.qcard::after{bottom:-11px;right:-6px}
+.q-head{display:flex;align-items:center;gap:14px;padding:18px 24px;border-bottom:1px dashed var(--line);flex-wrap:wrap}
+.q-num{font-family:var(--disp);font-weight:800;font-size:22px;color:#1a1603;background:var(--volt);min-width:58px;text-align:center;padding:7px 10px;border-radius:6px;box-shadow:3px 3px 0 rgba(255,225,77,.35)}
+.q-topic{font-family:var(--mono);font-size:12px;letter-spacing:2.5px;color:var(--cyan);font-weight:600}
+.q-pts{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:2px;color:var(--mut);border:1px solid var(--line);padding:5px 10px;border-radius:4px}
+.q-text{padding:20px 24px 6px;font-size:15.5px}
+.q-text b{color:var(--volt)}
+.sim-wrap{margin:16px 24px;border:1px dashed var(--line);border-radius:8px;background:#0a1626;padding:14px}
+.sim-label{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--cyan);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sim-label::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cyan);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+.sim-wrap canvas{width:100%;height:auto;display:block;border-radius:6px}
+.controls{display:flex;gap:22px;flex-wrap:wrap;margin-top:14px}
+.ctl{flex:1;min-width:190px}
+.ctl label{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--mut);display:flex;justify-content:space-between;margin-bottom:6px}
+.ctl label output{color:var(--volt);font-weight:600}
+input[type=range]{width:100%;appearance:none;-webkit-appearance:none;height:4px;background:var(--panel2);border-radius:2px;outline:none;border:1px solid var(--line)}
+input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:17px;height:17px;background:var(--cyan);border:2px solid #03202a;border-radius:4px;cursor:grab;box-shadow:2px 2px 0 rgba(88,230,255,.5);transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.18)}
+input[type=range]::-moz-range-thumb{width:15px;height:15px;background:var(--cyan);border:2px solid #03202a;border-radius:4px;cursor:grab}
+.opts{display:flex;flex-direction:column;gap:10px;padding:14px 24px 6px}
+.opt{display:flex;align-items:center;gap:14px;text-align:left;font-family:var(--body);font-size:14.5px;color:var(--txt);
+  background:var(--panel2);border:1px solid var(--line);border-radius:7px;padding:12px 15px;cursor:pointer;transition:.18s}
+.opt .letter{font-family:var(--mono);font-weight:800;font-size:13px;width:30px;height:30px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:5px;color:var(--mut);transition:.18s}
+.opt:hover{border-color:var(--blue);transform:translateX(4px)}
+.opt.sel{border-color:var(--cyan);background:rgba(88,230,255,.08)}
+.opt.sel .letter{background:var(--cyan);color:#03202a;border-color:var(--cyan)}
+.opt.ok{border-color:var(--good);background:rgba(74,222,128,.1)}
+.opt.ok .letter{background:var(--good);color:#0a1a0f;border-color:var(--good)}
+.opt.no{border-color:var(--bad);background:rgba(255,107,129,.09)}
+.opt.no .letter{background:var(--bad);color:#1a0d12;border-color:var(--bad)}
+.opt:disabled{cursor:default;opacity:.92}
+.q-foot{padding:16px 24px 22px}
+.check{width:100%;font-family:var(--disp);font-weight:700;font-size:14px;letter-spacing:1px;color:#1a1603;background:var(--volt);border:2px solid #1a1603;border-radius:7px;padding:13px;cursor:pointer;box-shadow:4px 4px 0 rgba(255,225,77,.3);transition:.18s}
+.check:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:7px 7px 0 rgba(255,225,77,.4)}
+.check:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+.fb{margin:0 24px 24px;border-radius:8px;overflow:hidden;animation:fbin .5s ease}
+@keyframes fbin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.fb-banner{font-family:var(--disp);font-weight:800;font-size:16px;padding:14px 18px;letter-spacing:.4px}
+.fb.ok .fb-banner{background:rgba(74,222,128,.14);color:var(--good);border-bottom:2px solid var(--good)}
+.fb.no .fb-banner{background:rgba(255,107,129,.13);color:var(--bad);border-bottom:2px solid var(--bad)}
+.fb-body{padding:18px;background:rgba(10,22,38,.7);border:1px solid var(--line);border-top:none;border-radius:0 0 8px 8px}
+.fb-prof{display:flex;gap:12px;align-items:flex-start;background:rgba(255,225,77,.06);border:1px dashed rgba(255,225,77,.4);border-radius:7px;padding:12px 14px;font-size:13.5px;margin-bottom:16px;color:#f7ecc0}
+.fb-prof .dot{flex:none;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--volt),#ffb84d);display:grid;place-items:center;color:#1a1603;font-family:var(--disp);font-weight:800;font-size:12px}
+.fb h4{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--cyan);margin:14px 0 10px}
+.steps{list-style:none;counter-reset:st}
+.steps li{counter-increment:st;position:relative;padding:9px 12px 9px 46px;margin:8px 0;font-size:14px;color:var(--mut);background:var(--panel2);border-radius:6px;border:1px solid var(--line);opacity:0;transform:translateX(-14px);animation:stepin .45s ease forwards}
+.steps li::before{content:counter(st,decimal-leading-zero);position:absolute;left:10px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-weight:800;font-size:11px;color:#03202a;background:var(--cyan);width:26px;height:26px;display:grid;place-items:center;border-radius:5px}
+.steps li b{color:var(--volt)}
+@keyframes stepin{to{opacity:1;transform:none}}
+.fb-key,.fb-tip{margin-top:12px;padding:11px 14px;border-radius:6px;font-size:13.5px}
+.fb-key{background:rgba(255,94,168,.07);border-left:3px solid var(--pink);color:#ffdcee}
+.fb-key b{color:var(--pink);font-family:var(--mono);font-size:11px;letter-spacing:2px}
+.fb-tip{background:rgba(125,255,138,.06);border-left:3px solid var(--grn);color:#dcffe2}
+.fb-tip b{color:var(--grn);font-family:var(--mono);font-size:11px;letter-spacing:2px}
+
+#resultado{display:none}
+.res-card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:40px;position:relative;overflow:hidden}
+.res-grid{display:grid;grid-template-columns:240px 1fr;gap:40px;align-items:center}
+.ring-wrap{position:relative;width:200px;height:200px;margin:0 auto}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--panel2);stroke-width:13}
+.ring-fg{fill:none;stroke:var(--volt);stroke-width:13;stroke-linecap:round;stroke-dasharray:502;stroke-dashoffset:502;transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)}
+.ring-txt{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring-txt .n{font-family:var(--disp);font-weight:800;font-size:46px;color:var(--volt)}
+.ring-txt .d{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--mut)}
+.res-title{font-family:var(--disp);font-weight:800;font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:10px}
+.res-msg{color:var(--mut);font-size:15px;margin-bottom:18px}
+.res-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:16px 0 20px}
+.res-item{font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;border:1px solid var(--line);border-radius:6px;padding:8px 11px;display:flex;gap:8px;align-items:center;color:var(--mut)}
+.res-item.ok{border-color:rgba(74,222,128,.4);color:var(--good)}
+.res-item.no{border-color:rgba(255,107,129,.4);color:var(--bad)}
+.gab{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:1px;border-top:1px dashed var(--line);padding-top:14px;margin-bottom:20px}
+.gab b{color:var(--volt)}
+.confetti{position:absolute;top:-10px;width:9px;height:14px;opacity:.9;animation:fall 2.8s ease-in forwards}
+@keyframes fall{to{transform:translateY(560px) rotate(660deg);opacity:0}}
+
+footer{border-top:1px solid var(--line);padding:60px 0 46px;text-align:center;background:rgba(14,29,44,.5)}
+.f-prof{font-family:var(--disp);font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);margin-top:8px}
+.f-role{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--cyan);margin:8px 0 18px}
+.f-quote{max-width:640px;margin:0 auto 26px;color:var(--mut);font-size:15.5px;font-style:italic}
+.f-quote b{color:var(--volt);font-style:normal}
+.f-meta{font-family:var(--mono);font-size:11px;color:rgba(143,168,189,.6);letter-spacing:1.5px}
+.top-btn{position:fixed;right:22px;bottom:22px;z-index:95;width:46px;height:46px;border-radius:8px;background:var(--volt);color:#1a1603;border:2px solid #1a1603;font-size:19px;cursor:pointer;box-shadow:4px 4px 0 rgba(255,225,77,.35);opacity:0;pointer-events:none;transition:.25s}
+.top-btn.show{opacity:1;pointer-events:auto}
+.top-btn:hover{transform:translateY(-4px)}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+:focus-visible{outline:3px solid var(--volt);outline-offset:2px}
+
+@media(max-width:920px){
+  .hero-grid,.rev-grid,.res-grid{grid-template-columns:1fr}
+  .rev-sticky{position:static}
+  .tstats .chip.hm{display:none}
+}
+@media(max-width:560px){
+  .q-head,.q-text,.q-foot{padding-left:16px;padding-right:16px}
+  .sim-wrap,.fb{margin-left:16px;margin-right:16px}
+  .res-card{padding:26px 18px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+  .mtrack{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="gear">M3</span><span>FÍSICA · 3º ANO · EP2<small>PROF. ANDERSON DANIEL</small></span></div>
+    <div class="tstats">
+      <span class="chip hm" id="clock">⏱ 00:00</span>
+      <span class="chip aq">QUESTÕES <b id="tdone">0</b>/10</span>
+      <span class="chip">NOTA <b id="tscore">0,0</b></span>
+    </div>
+  </div>
+  <div class="ptrack"><div class="pfill" id="pfill"></div></div>
+</header>
+
+<section class="hero">
+  <div class="formulas" aria-hidden="true">
+    <span style="top:8%;left:4%">U = R·i</span>
+    <span style="top:76%;left:3%;animation-delay:1.2s">E = h·f</span>
+    <span style="top:12%;left:46%;animation-delay:2s">F = q·v·B·senθ</span>
+    <span style="top:86%;left:56%;animation-delay:.6s">E = m·c²</span>
+    <span style="top:36%;left:90%;animation-delay:1.6s">N = N₀/2ⁿ</span>
+    <span style="top:62%;left:80%;animation-delay:2.6s">P = U·i</span>
+  </div>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="kicker">SIMULADO 2 AMPLIADO · RECUPERAÇÃO · TURMA M3</p>
+      <h1><span id="scr1" data-text="EXAME PARCIAL 2">EXAME PARCIAL 2</span><br><span class="acc" id="scr2" data-text="DO ELÉTRON À ENERGIA NUCLEAR">DO ELÉTRON À ENERGIA NUCLEAR</span></h1>
+      <p class="h-sub">Eletrodinâmica · Eletromagnetismo · Física Moderna</p>
+      <p class="h-desc">Simulado interativo com <b>10 questões</b> e <b>11 simulações ao vivo</b>. Mexa nos sliders, responda, confira o gabarito comentado <b>passo a passo</b> e chegue ao exame oficial com segurança.</p>
+      <div class="prof-chip"><span class="dot">AD</span><span>Elaborado e comentado por <b>Prof. Anderson Daniel</b> · Física — Turma M3</span></div>
+      <div class="instructions">
+        <h3>▤ INSTRUÇÕES — LEIA ANTES DE COMEÇAR</h3>
+        <ul>
+          <li><b>10 questões</b> de múltipla escolha, valendo <b>1,0 pt</b> cada.</li>
+          <li>Explore cada <b>simulador</b> antes de responder — os sliders fazem parte do estudo.</li>
+          <li>Clique em <b>CONFERIR</b> para liberar o gabarito comentado passo a passo.</li>
+          <li>Sua nota e progresso aparecem <b>em tempo real</b> na barra superior.</li>
+          <li>Ao final, tire <b>print do diagnóstico</b> e envie na atividade.</li>
+        </ul>
+        <div class="assinatura">ALUNO(A): ______________________________ &nbsp;·&nbsp; TURMA: M3 (3º ANO) &nbsp;·&nbsp; DATA: ____/____/______</div>
+      </div>
+      <div class="btnrow">
+        <a class="btn" href="#prova">▶ INICIAR SIMULADO</a>
+        <a class="btn ghost" href="#revisao">✎ REVISAR CONCEITOS</a>
+      </div>
+    </div>
+    <div class="atom-panel reveal">
+      <div class="stamp">RECUPERAÇÃO</div>
+      <canvas id="atom" width="560" height="300" aria-label="Átomo de Bohr com elétrons e emissão de fóton"></canvas>
+      <p class="atom-cap">Fig. 01 — Modelo de Bohr · salto quântico emite fóton</p>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="mtrack" id="mtrack">
+    <span>E = mc²: <b>um grama de esforço vale uma enormidade de resultado</b>.</span>
+    <span>Como o fóton: sua energia depende da <b>frequência</b> — intensidade sem direção não arranca elétrons.</span>
+    <span>Bohr ensinou: evolução acontece em <b>saltos</b>. Dê o seu hoje. ⚛️</span>
+    <span>Meia-vida: o que você estuda hoje <b>não desaparece</b> — metade fica para sempre.</span>
+    <span>Prof. Anderson Daniel: <b>"A constância vence o talento quando o talento não é constante."</b></span>
+    <span>Lenz: toda mudança gera resistência. <b>Insista — a corrente vai fluir.</b></span>
+    <span>Turma M3: vocês são a geração que <b>transforma massa em energia</b>.</span>
+    <span>Na dúvida, volte ao fundamental: <b>desenhe, pense, resolva</b>.</span>
+    <span>Ohm, Faraday, Einstein e Bohr concordariam: <b>prática gera domínio</b>.</span>
+    <span>Respire, monte o circuito mental e <b>confie no processo</b>.</span>
+  </div>
+</div>
+
+<!-- ======= ROTA DE REVISÃO ======= -->
+<section id="revisao">
+  <div class="wrap rev-grid">
+    <div class="rev-sticky reveal">
+      <p class="sec-kick">ANTES DA PROVA</p>
+      <h2>ROTA DE <span class="acc">REVISÃO</span></h2>
+      <p>Os <b style="color:var(--volt)">5 pilares</b> do 3º Ano que sustentam todo o Exame Parcial 2. Leia com calma, siga os roteiros e memorize as pegadinhas.</p>
+      <nav class="rev-index">
+        <a href="#p1"><b>01</b> ELETRODINÂMICA</a>
+        <a href="#p2"><b>02</b> FORÇA MAGNÉTICA</a>
+        <a href="#p3"><b>03</b> INDUÇÃO ELETROMAGNÉTICA</a>
+        <a href="#p4"><b>04</b> FÍSICA QUÂNTICA</a>
+        <a href="#p5"><b>05</b> RADIOATIVIDADE & E=mc²</a>
+      </nav>
+    </div>
+    <div class="pillars">
+      <article class="pillar reveal" id="p1"><span class="pnum">PILAR 01</span>
+        <h3>Eletrodinâmica</h3>
+        <div class="fchips"><span class="fchip">U = R·i</span><span class="fchip">P = U·i</span><span class="fchip">E = P·Δt</span></div>
+        <ol>
+          <li>Corrente é fluxo de carga: <b>i = Δq/Δt</b> (ampère = coulomb/segundo);</li>
+          <li>1ª Lei de Ohm: <b>U = R·i</b> — isole o que a questão pede;</li>
+          <li>Consumo de energia: <b>E(kWh) = P(kW) × t(h)</b> — depois multiplique pela tarifa.</li>
+        </ol>
+        <div class="trap"><b>⚠ PEGADINHA:</b> no kWh, potência deve estar em <b>kW</b> e tempo em <b>horas</b>. 100 W = 0,1 kW!</div>
+      </article>
+      <article class="pillar reveal" id="p2"><span class="pnum">PILAR 02</span>
+        <h3>Força Magnética</h3>
+        <div class="fchips"><span class="fchip">F = q·v·B·senθ</span><span class="fchip">regra da mão direita</span></div>
+        <ol>
+          <li>Identifique <b>q, v, B e o ângulo θ</b> entre v e B;</li>
+          <li>Aplique <b>F = |q|·v·B·senθ</b> — perpendicular a v e a B;</li>
+          <li>θ = 90° → trajetória <b>circular</b>; θ = 0° → força NULA.</li>
+        </ol>
+        <div class="trap"><b>⚠ PEGADINHA:</b> carga parada (v = 0) ou paralela ao campo NÃO sofre força magnética.</div>
+      </article>
+      <article class="pillar reveal" id="p3"><span class="pnum">PILAR 03</span>
+        <h3>Indução Eletromagnética</h3>
+        <div class="fchips"><span class="fchip">fem = −ΔΦ/Δt</span><span class="fchip">Φ = B·A·cosθ</span></div>
+        <ol>
+          <li>A palavra-chave de Faraday é <b>VARIAÇÃO</b>: só há corrente induzida se o fluxo Φ mudar;</li>
+          <li>Varia-se Φ mudando <b>B, a área ou o ângulo</b> da espira;</li>
+          <li>Lenz: a corrente induzida <b>se opõe à variação</b> do fluxo (conservação de energia).</li>
+        </ol>
+        <div class="trap"><b>⚠ PEGADINHA:</b> ímã PARADO dentro da bobina → fluxo constante → corrente ZERO.</div>
+      </article>
+      <article class="pillar reveal" id="p4"><span class="pnum">PILAR 04</span>
+        <h3>Física Quântica</h3>
+        <div class="fchips"><span class="fchip">E = h·f</span><span class="fchip">h·f = Φ + E_c</span><span class="fchip">ΔE = E_i − E_f</span></div>
+        <ol>
+          <li>Luz é feita de <b>fótons</b>: cada um carrega E = h·f (pacotes quantizados);</li>
+          <li>Efeito fotoelétrico: o fóton precisa vencer a <b>função trabalho Φ</b>; frequência decide SE arranca, intensidade decide QUANTOS;</li>
+          <li>Bohr: elétron salta entre níveis; desceu → <b>emite</b> fóton com ΔE = E_i − E_f.</li>
+        </ol>
+        <div class="trap"><b>⚠ PEGADINHA:</b> aumentar a INTENSIDADE da luz não aumenta a energia dos elétrons — só o número deles!</div>
+      </article>
+      <article class="pillar reveal" id="p5"><span class="pnum">PILAR 05</span>
+        <h3>Radioatividade & E = mc²</h3>
+        <div class="fchips"><span class="fchip">N = N₀/2ⁿ</span><span class="fchip">E = m·c²</span><span class="fchip">α &lt; β &lt; γ (penetração)</span></div>
+        <ol>
+          <li>α (núcleo de He, pouco penetrante) · β (elétron, média) · <b>γ (fóton, muito penetrante)</b>;</li>
+          <li>Meia-vida: a cada período T, a massa restante <b>cai pela metade</b>: conte quantas meias-vidas passaram;</li>
+          <li>Equivalência massa-energia: <b>E = m·c²</b>, com c = 3×10⁸ m/s (c² = 9×10¹⁶!).</li>
+        </ol>
+        <div class="trap"><b>⚠ PEGADINHA:</b> a meia-vida corta a METADE DO QUE RESTOU — não da quantidade inicial.</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======= SIMULADO 2 AMPLIADO ======= -->
+<section id="prova">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="sec-kick">SIMULADO 2 AMPLIADO · VALOR TOTAL: 10,0 PTS</p>
+      <h2>RESPONDA, SIMULE E <span class="acc">CONFIRA</span></h2>
+      <p style="color:var(--mut);margin-top:10px;max-width:640px">Escolha uma alternativa e clique em <b style="color:var(--volt)">CONFERIR</b>. O gabarito comentado do Prof. Anderson Daniel só é liberado após a sua tentativa.</p>
+    </div>
+    <div id="qwrap"></div>
+  </div>
+</section>
+
+<section id="resultado">
+  <div class="wrap">
+    <div class="res-card" id="rescard">
+      <div class="res-grid">
+        <div class="ring-wrap">
+          <svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true">
+            <circle class="ring-bg" cx="100" cy="100" r="80"></circle>
+            <circle class="ring-fg" id="ringfg" cx="100" cy="100" r="80"></circle>
+          </svg>
+          <div class="ring-txt"><div><div class="n" id="rnota">0,0</div><div class="d">NOTA FINAL / 10,0</div></div></div>
+        </div>
+        <div>
+          <p class="sec-kick">DIAGNÓSTICO FINAL</p>
+          <h3 class="res-title" id="rtitle"></h3>
+          <p class="res-msg" id="rmsg"></p>
+          <div class="res-list" id="rlist"></div>
+          <div class="gab" id="rgab"></div>
+          <div class="btnrow">
+            <button class="btn" id="retry">↺ REFAZER SIMULADO</button>
+            <a class="btn ghost" href="#revisao">✎ VOLTAR À REVISÃO</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="sec-kick">FEITO PARA A TURMA M3, COM ELÉTRONS, FÓTONS E MUITA FÍSICA ⚛️⚡</p>
+    <p class="f-prof">Prof. Anderson Daniel</p>
+    <p class="f-role">PROFESSOR DE FÍSICA · TURMA M3 · 3º ANO · SIMULADO 2 AMPLIADO</p>
+    <p class="f-quote">"Assim como um elétron precisa da energia exata para saltar de nível, você precisa da <b>preparação exata</b> para saltar para a próxima etapa. E essa energia se chama estudo diário."</p>
+    <p class="f-meta">ELETRODINÂMICA · ELETROMAGNETISMO · FÍSICA MODERNA · RECUPERAÇÃO INTERATIVA · E = m·c²</p>
+  </div>
+</footer>
+
+<button class="top-btn" id="topbtn" aria-label="Voltar ao topo">↑</button>
+
+<script>
+'use strict';
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ================= HELPERS ================= */
+const CYAN='#58e6ff',VOLT='#ffe14d',PINK='#ff5ea8',GRN='#7dff8a',TXT='#eaf6ff',MUT='#8fa8bd',BAD='#ff6b81',GOOD='#4ade80',PANEL='#132a3d',BLUE='#6db1ff';
+function line(c,x1,y1,x2,y2){c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();}
+function arrow(c,x1,y1,x2,y2,col,lw=3){
+  c.strokeStyle=col;c.fillStyle=col;c.lineWidth=lw;
+  const a=Math.atan2(y2-y1,x2-x1),h=8+lw;
+  line(c,x1,y1,x2,y2);
+  c.beginPath();c.moveTo(x2,y2);
+  c.lineTo(x2-h*Math.cos(a-.44),y2-h*Math.sin(a-.44));
+  c.lineTo(x2-h*Math.cos(a+.44),y2-h*Math.sin(a+.44));
+  c.closePath();c.fill();
+}
+function label(c,t,x,y,col=TXT,s=13,al='left'){
+  c.fillStyle=col;c.font=`600 ${s}px "JetBrains Mono",monospace`;c.textAlign=al;c.fillText(t,x,y);c.textAlign='left';
+}
+function clearC(c){c.clearRect(0,0,560,280);}
+const SUP={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻'};
+function sup(n){return String(n).split('').map(d=>SUP[d]||d).join('');}
+function expStr(v){const e=Math.floor(Math.log10(v));const m=v/Math.pow(10,e);return m.toFixed(1).replace('.',',')+'×10'+sup(e);}
+const DT=1/60;
+
+/* ================= QUESTÕES ================= */
+const Q=[
+{topic:'1ª LEI DE OHM',text:'Um resistor percorrido por uma corrente de <b>2 A</b> está submetido a uma tensão de <b>12 V</b>. A resistência elétrica desse resistor é:',
+ sliders:[{k:'U',l:'TENSÃO U',min:2,max:24,step:1,val:12,u:' V'},{k:'R',l:'RESISTÊNCIA R',min:2,max:12,step:1,val:6,u:' Ω'}],
+ opts:['24 Ω','0,17 Ω','6 Ω','10 Ω'],correct:2,
+ steps:['Escreva a 1ª Lei de Ohm: <b>U = R·i</b>.','Isole a resistência: <b>R = U/i</b>.','Substitua: <b>R = 12/2 = 6 Ω</b>.'],
+ key:'Tensão é a "pressão" elétrica, corrente é o fluxo e resistência é a oposição ao fluxo. No simulador, aumente R e veja os elétrons desacelerarem.',
+ tip:'Unidades: V = Ω·A. Se a questão der mA, converta para A (1 mA = 10⁻³ A).',
+ prof:'Ohm é a espinha dorsal da eletricidade. Isole o que a questão pede e substitua — sem mistério. — Prof. Anderson Daniel'},
+{topic:'CORRENTE ELÉTRICA',text:'Uma carga total de <b>12 C</b> atravessa a seção transversal de um fio em <b>2 s</b>. A intensidade da corrente elétrica nesse fio é:',
+ sliders:[{k:'q',l:'CARGA Δq QUE ATRAVESSA',min:2,max:30,step:2,val:12,u:' C'}],
+ opts:['6 A','2 A','10 A','24 A'],correct:0,
+ steps:['Corrente é a quantidade de carga por unidade de tempo: <b>i = Δq/Δt</b>.','Substitua: <b>i = 12/2</b>.','Resultado: <b>i = 6 A</b>.'],
+ key:'Corrente é FLUXO: pense como água passando por um cano. Quanto mais carga por segundo, maior a corrente — acompanhe as cargas no simulador.',
+ tip:'1 A = 1 C/s. Questões de corrente costumam ser rápidas: identifique Δq e Δt e divida.',
+ prof:'Corrente é fluxo: quantos coulombs passam por segundo. Pense como água no cano. — Prof. Anderson Daniel'},
+{topic:'POTÊNCIA & CONSUMO',text:'Uma lâmpada de <b>100 W</b> fica acesa por <b>5 h</b> em um dia. A energia elétrica consumida nesse período é:',
+ sliders:[{k:'P',l:'POTÊNCIA DO APARELHO',min:100,max:5500,step:100,val:100,u:' W'},{k:'t',l:'TEMPO DE USO',min:1,max:10,step:1,val:5,u:' h'}],
+ opts:['5 kWh','0,05 kWh','50 kWh','0,5 kWh'],correct:3,
+ steps:['A energia consumida é <b>E = P·Δt</b>.','Converta a potência para kW: <b>100 W = 0,1 kW</b>.','Calcule: <b>E = 0,1 × 5 = 0,5 kWh</b>.'],
+ key:'É exatamente assim que a companhia de energia calcula sua conta de luz. Aumente a potência no simulador e veja o medidor girar mais rápido — e o custo subir!',
+ tip:'kWh exige kW e horas. Erro clássico: usar watts direto e obter "500" sem unidade correto.',
+ prof:'Na conta de luz, potência em kW e tempo em horas: o produto é o consumo. Simples assim. — Prof. Anderson Daniel'},
+{topic:'FORÇA MAGNÉTICA',text:'Uma carga de <b>2×10⁻⁶ C</b> entra perpendicularmente (θ = 90°) em uma região de campo magnético <b>B = 0,5 T</b>, com velocidade <b>3×10⁵ m/s</b>. A força magnética sobre ela vale:',
+ sliders:[{k:'B',l:'CAMPO MAGNÉTICO B',min:0.1,max:1,step:0.05,val:0.5,u:' T'}],
+ opts:['3,0 N','0,03 N','30 N','0,3 N'],correct:3,
+ steps:['Força magnética sobre carga em movimento: <b>F = |q|·v·B·senθ</b>.','Como θ = 90°, <b>senθ = 1</b>.','Substitua: <b>F = 2×10⁻⁶ × 3×10⁵ × 0,5 = 0,3 N</b>.'],
+ key:'A força é sempre PERPENDICULAR à velocidade — por isso ela curva a trajetória sem mudar o valor da velocidade (não realiza trabalho). Aumente B e veja o raio diminuir.',
+ tip:'Carga parada ou movendo-se PARALELA ao campo: F = 0. Use a regra da mão direita para o sentido.',
+ prof:'Regra da mão direita: F é sempre perpendicular a v e a B. Por isso a trajetória curva. — Prof. Anderson Daniel'},
+{topic:'INDUÇÃO ELETROMAGNÉTICA',text:'Segundo Faraday, uma corrente elétrica induzida aparece em uma bobina somente quando:',
+ sliders:[{k:'v',l:'VELOCIDADE DO ÍMÃ',min:0.5,max:3,step:0.25,val:1.5,u:'×'}],
+ opts:['o circuito permanece em repouso dentro de um campo magnético uniforme','o fluxo magnético através do circuito varia com o tempo','um ímã permanece parado no interior da bobina','o campo magnético ao redor é intenso, porém constante'],correct:1,
+ steps:['Faraday descobriu que o que induz corrente é a <b>variação do fluxo magnético</b>: fem = −ΔΦ/Δt.','Fluxo constante (ímã parado, campo constante) → <b>ΔΦ = 0 → sem corrente</b>.','Logo, só há corrente quando <b>o fluxo varia com o tempo</b>.'],
+ key:'No simulador, mova o ímã mais rápido: quanto maior a velocidade de variação do fluxo, maior a deflexão do galvanômetro. Ímã parado → agulha em zero!',
+ tip:'Pode-se variar Φ de três formas: mudando B, mudando a área da espira ou girando-a (é assim que funcionam os geradores!).',
+ prof:'A palavra-chave de Faraday é VARIAÇÃO. Fluxo parado não induz nada. — Prof. Anderson Daniel'},
+{topic:'ENERGIA DO FÓTON',text:'Dado: constante de Planck <b>h = 4,14×10⁻¹⁵ eV·s</b>. A energia de um fóton de luz com frequência <b>f = 5×10¹⁴ Hz</b> é:',
+ sliders:[{k:'f',l:'FREQUÊNCIA f (×10¹⁴ Hz)',min:4,max:8,step:0.25,val:5,u:'×10¹⁴ Hz'}],
+ opts:['4,14 eV','2,07 eV','1,04 eV','5,00 eV'],correct:1,
+ steps:['Energia do fóton: <b>E = h·f</b>.','Substitua: <b>E = 4,14×10⁻¹⁵ × 5×10¹⁴</b>.','Multiplique: 4,14 × 5 = 20,7 e 10⁻¹⁵ × 10¹⁴ = 10⁻¹ → <b>E = 2,07 eV</b>.'],
+ key:'Luz mais frequente = fóton mais energético. Mova o slider: a cor vai do vermelho ao violeta e a energia sobe.',
+ tip:'Com h em eV·s, a resposta já sai em elétron-volts — unidade favorita das questões de Física Moderna.',
+ prof:'A energia do fóton é inteira, em pacotes: E = h·f. Luz mais frequente, fóton mais energético. — Prof. Anderson Daniel'},
+{topic:'EFEITO FOTOELÉTRICO',text:'No efeito fotoelétrico, aumentando apenas a <b>intensidade</b> da luz incidente (mantendo a frequência acima da frequência mínima), o que aumenta?',
+ sliders:[{k:'f',l:'FREQUÊNCIA f (×10¹⁴ Hz)',min:3,max:8,step:0.25,val:5,u:'×10¹⁴ Hz'},{k:'I',l:'INTENSIDADE DA LUZ',min:1,max:5,step:1,val:2,u:''}],
+ opts:['A energia cinética máxima dos elétrons ejetados','A frequência mínima necessária para a emissão','O número de elétrons ejetados por segundo','A velocidade da luz dentro do metal'],correct:2,
+ steps:['Einstein explicou: cada elétron é arrancado por <b>UM fóton</b> (interação individual).','A frequência define a energia de cada fóton (E = h·f); a intensidade define <b>quantos fótons</b> chegam por segundo.','Mais intensidade = mais fótons = <b>mais elétrons ejetados</b>, mas com a MESMA energia máxima.','Verifique no simulador: aumente a intensidade (mais fótons) e depois a frequência (elétrons mais rápidos).'],
+ key:'Frequência decide SE arranca e com QUANTA energia; intensidade decide QUANTOS elétrons saem. Abaixo da frequência mínima, nenhuma emissão — nem com luz fortíssima!',
+ tip:'A Física Clássica previa o contrário — e é exatamente isso que a questão adora cobrar.',
+ prof:'Einstein mostrou: frequência decide SE arranca e com quanta energia; intensidade decide QUANTOS. — Prof. Anderson Daniel'},
+{topic:'MODELO DE BOHR',text:'No modelo de Bohr, um elétron salta do nível <b>E₃ = −1,5 eV</b> para o nível <b>E₂ = −3,4 eV</b>. Nesse salto, o átomo:',
+ sliders:[{k:'tr',l:'SALTO QUÂNTICO',min:0,max:3,step:1,val:0,u:''}],
+ opts:['emite um fóton de 5,1 eV','emite um fóton de 1,9 eV','absorve um fóton de 1,9 eV','absorve um fóton de 4,9 eV'],correct:1,
+ steps:['O elétron DESCE de nível (de −1,5 eV para −3,4 eV) → a energia perdida sai como fóton: <b>EMISSÃO</b>.','Energia do fóton: <b>ΔE = E_inicial − E_final</b>.','ΔE = (−1,5) − (−3,4) = <b>+1,9 eV</b> → fóton emitido de 1,9 eV.'],
+ key:'Elétron só "mora" em níveis permitidos. Desceu de nível → EMITE fóton; subiu → ABSORVE fóton, sempre com a diferença exata de energia. Teste os outros saltos no slider!',
+ tip:'Cuidado com os sinais: energias dos níveis são NEGATIVAS. Faça sempre E_inicial − E_final.',
+ prof:'Elétron só mora em andar permitido. Desceu de nível? Emite fóton com a diferença exata. — Prof. Anderson Daniel'},
+{topic:'MEIA-VIDA',text:'Uma substância radioativa tem meia-vida de <b>8 dias</b>. Partindo de <b>100 g</b>, a massa restante após <b>24 dias</b> será:',
+ sliders:[{k:'t',l:'TEMPO DECORRIDO',min:0,max:32,step:1,val:24,u:' dias'}],
+ opts:['12,5 g','50 g','25 g','6,25 g'],correct:0,
+ steps:['Calcule quantas meias-vidas passaram: <b>n = 24/8 = 3 meias-vidas</b>.','A cada meia-vida a massa RESTANTE cai pela metade: <b>100 → 50 → 25 → 12,5 g</b>.','Ou pela fórmula: <b>m = m₀/2ⁿ = 100/2³ = 100/8 = 12,5 g</b>.'],
+ key:'Observe os pontos verdes decaindo no simulador: a cada 8 dias, metade do que restou desaparece. Meia-vida é probabilidade — mas para grandes amostras, a regra é precisa.',
+ tip:'Monte a "escadinha": divida por 2 a cada período. Erro clássico: dividir 100 pelo número de dias.',
+ prof:'Meia-vida corta pela METADE do que restou — nunca da quantidade inicial. — Prof. Anderson Daniel'},
+{topic:'EQUIVALÊNCIA MASSA-ENERGIA',text:'Pela equação de Einstein <b>E = m·c²</b>, a conversão completa de <b>2 g</b> de massa em energia liberaria (c = 3×10⁸ m/s):',
+ sliders:[{k:'m',l:'MASSA CONVERTIDA',min:0.5,max:5,step:0.5,val:2,u:' g'}],
+ opts:['1,8×10¹⁶ J','1,8×10¹¹ J','1,8×10¹⁴ J','1,8×10¹³ J'],correct:2,
+ steps:['Converta a massa para kg: <b>2 g = 2×10⁻³ kg</b>.','Aplique <b>E = m·c²</b>: E = 2×10⁻³ × (3×10⁸)².','Calcule: (3×10⁸)² = 9×10¹⁶ → <b>E = 2×10⁻³ × 9×10¹⁶ = 1,8×10¹⁴ J</b>.'],
+ key:'Pouquíssima massa guarda uma quantidade ABSURDA de energia — o princípio por trás do Sol e das usinas nucleares. Veja o equivalente em TNT crescer com o slider.',
+ tip:'Não esqueça: massa em KG e o c ao quadrado (9×10¹⁶). Cuidado com a soma dos expoentes: 10⁻³ × 10¹⁶ = 10¹³, vezes 1,8 → 10¹⁴!',
+ prof:'E = mc² revela: pouquíssima massa guarda uma quantidade absurda de energia. — Prof. Anderson Daniel'}
+];
+/* gabarito validado: C A D D B B C B A C */
+
+/* ================= SIMULAÇÕES ================= */
+const SIMS={
+ q1:{draw(c,t,p){clearC(c);
+   const i=p.U/p.R;
+   c.strokeStyle=MUT;c.lineWidth=2.5;
+   c.strokeRect(90,70,380,145);
+   c.strokeStyle=CYAN;c.lineWidth=3;c.beginPath();
+   let zx=230;for(let k=0;k<6;k++){c.lineTo(zx,k%2?70:54);zx+=20;}c.stroke();
+   label(c,'RESISTOR',280,44,MUT,11,'center');
+   c.strokeStyle=VOLT;c.lineWidth=3;line(c,252,205,252,225);
+   c.lineWidth=5;line(c,268,209,268,221);
+   label(c,'BATERIA',260,248,MUT,11,'center');
+   const pts=[[90,215],[90,70],[470,70],[470,215]];
+   const segs=[];let tot=0;
+   for(let k=0;k<4;k++){const a=pts[k],b=pts[(k+1)%4],L=Math.hypot(b[0]-a[0],b[1]-a[1]);segs.push([a,b,L]);tot+=L;}
+   const sp=12+i*13;
+   for(let d=0;d<12;d++){
+     let s=((t*sp)+d*tot/12)%tot,seg=null,acc=0;
+     for(const sg of segs){if(s<=acc+sg[2]){seg=[sg,(s-acc)/sg[2]];break;}acc+=sg[2];}
+     if(seg){const [sg,f]=seg,x=sg[0][0]+(sg[1][0]-sg[0][0])*f,y=sg[0][1]+(sg[1][1]-sg[0][1])*f;
+       c.fillStyle=CYAN;c.beginPath();c.arc(x,y,4,0,7);c.fill();}}
+   label(c,`U = ${p.U} V`,36,40,VOLT,15);label(c,`R = ${p.R} Ω`,36,64,MUT,13);
+   label(c,`i = U/R = ${p.U}/${p.R} = ${i.toFixed(2)} A`,36,268,CYAN,16);}},
+ q2:{draw(c,t,p){clearC(c);
+   const i=p.q/2;
+   c.fillStyle='rgba(88,230,255,.08)';c.fillRect(40,110,480,56);
+   c.strokeStyle=MUT;c.lineWidth=2;line(c,40,110,520,110);line(c,40,166,520,166);
+   c.setLineDash([5,6]);c.strokeStyle=VOLT;c.lineWidth=2;line(c,280,100,280,176);c.setLineDash([]);
+   label(c,'seção de corte',280,92,VOLT,11,'center');
+   const v=14+i*8,gap=34;
+   for(let k=0;k<14;k++){
+     const x=40+((t*v+k*gap)%480);
+     c.fillStyle=CYAN;c.beginPath();c.arc(x,138,7,0,7);c.fill();
+     c.fillStyle='#03202a';c.font='700 9px "JetBrains Mono"';c.textAlign='center';c.fillText('−',x,141);c.textAlign='left';}
+   arrow(c,440,138,510,138,MUT,2.5);label(c,'sentido das cargas',470,128,MUT,10,'center');
+   label(c,`Δq = ${p.q} C atravessam em Δt = 2 s`,36,52,MUT,14);
+   label(c,`i = Δq/Δt = ${p.q}/2 = ${i.toFixed(1)} A`,36,268,CYAN,17);}},
+ q3:{st:{a:0},draw(c,t,p){clearC(c);const s=this.st;
+   const Ek=p.P*p.t/1000,custo=Ek*0.6;
+   if(!reduced)s.a+=(0.4+p.P/900)*DT*3;
+   c.strokeStyle=MUT;c.lineWidth=3;c.beginPath();c.arc(130,120,48,0,7);c.stroke();
+   c.strokeStyle=CYAN;c.lineWidth=2;line(c,130,120,130+40*Math.cos(s.a),120+40*Math.sin(s.a));
+   c.beginPath();c.arc(130,120,3,0,7);c.fillStyle=CYAN;c.fill();
+   label(c,'MEDIDOR',130,190,MUT,11,'center');
+   const glow=Math.min(p.P/5500,1);
+   c.fillStyle=`rgba(255,225,77,${0.15+glow*0.75})`;
+   c.beginPath();c.arc(360,110,26+glow*14,0,7);c.fill();
+   c.strokeStyle=MUT;c.lineWidth=2;c.beginPath();c.arc(360,110,20,0,7);c.stroke();
+   c.strokeRect(352,130,16,14);
+   label(c,p.P>=1000?'chuveiro?':'lâmpada',360,168,MUT,10,'center');
+   label(c,`P = ${p.P} W = ${(p.P/1000).toFixed(2).replace('.',',')} kW`,240,226,MUT,13);
+   label(c,`E = P·t = ${(p.P/1000).toFixed(2).replace('.',',')} × ${p.t} = ${Ek.toFixed(2).replace('.',',')} kWh`,36,44,VOLT,15);
+   label(c,`custo ≈ R$ ${custo.toFixed(2).replace('.',',')} (tarifa R$ 0,60/kWh)`,36,268,GRN,14);}},
+ q4:{draw(c,t,p){clearC(c);
+   const q=2e-6,v=3e5,F=q*v*p.B;
+   c.fillStyle='rgba(109,177,255,.05)';c.fillRect(240,30,290,220);
+   c.strokeStyle='rgba(143,168,189,.5)';c.lineWidth=1;
+   for(let x=264;x<=516;x+=42)for(let y=52;y<=236;y+=46){
+     c.beginPath();c.arc(x,y,7,0,7);c.stroke();
+     line(c,x-4,y-4,x+4,y+4);line(c,x-4,y+4,x+4,y-4);}
+   label(c,'B entrando na página (⊗)',385,24,MUT,11,'center');
+   const r=90/p.B,cx=240,cy=190-r;
+   const aexit=Math.asin(Math.min(290/r,1))||Math.PI;
+   c.strokeStyle='rgba(88,230,255,.4)';c.lineWidth=1.5;c.beginPath();
+   for(let a=0;a<=aexit;a+=0.05){const x=cx+r*Math.sin(a),y=cy+r*Math.cos(a);a===0?c.moveTo(x,y):c.lineTo(x,y);}c.stroke();
+   const al=reduced?1:(t*1.4*(p.B/0.5))%(aexit+0.6);
+   if(al<=aexit){
+     const px=cx+r*Math.sin(al),py=cy+r*Math.cos(al);
+     const tx=Math.cos(al),ty=-Math.sin(al);
+     arrow(c,px,py,px+tx*44,py+ty*44,GRN,2.5);
+     arrow(c,px,py,px+(cx-px)/r*34,py+(cy-py)/r*34,PINK,2.5);
+     c.fillStyle=VOLT;c.beginPath();c.arc(px,py,7,0,7);c.fill();
+     c.fillStyle='#1a1603';c.font='700 10px "JetBrains Mono"';c.textAlign='center';c.fillText('+',px,py+3.5);c.textAlign='left';}
+   arrow(c,60,190,230,190,MUT,2.5);label(c,'v = 3×10⁵ m/s',140,178,MUT,11,'center');
+   label(c,`F = q·v·B·sen90° = 2×10⁻⁶ × 3×10⁵ × ${p.B.toFixed(2)}`,36,44,MUT,13);
+   label(c,`F = ${F.toFixed(2)} N  ·  raio ∝ 1/B`,36,268,VOLT,16);}},
+ q5:{draw(c,t,p){clearC(c);
+   const sp=p.v,mx=125+70*Math.sin(t*sp),vel=Math.cos(t*sp);
+   const prox=Math.max(0,1-Math.abs(mx-210)/170),defl=0.95*vel*(0.3+0.7*prox);
+   c.strokeStyle=MUT;c.lineWidth=1.5;
+   line(c,335,97,412,80);line(c,335,193,488,178);line(c,488,178,488,96);
+   for(let k=0;k<5;k++){c.strokeStyle=CYAN;c.lineWidth=2.5;
+     c.beginPath();c.ellipse(258+k*20,145,9,48,0,0,7);c.stroke();}
+   c.fillStyle=PINK;c.fillRect(mx,133,34,24);
+   c.fillStyle=BLUE;c.fillRect(mx+34,133,34,24);
+   label(c,'N',mx+17,149,'#1a0d12',12,'center');label(c,'S',mx+51,149,'#03202a',12,'center');
+   c.strokeStyle=MUT;c.lineWidth=3;c.beginPath();c.arc(450,96,40,Math.PI,0);c.stroke();
+   line(c,410,96,490,96);
+   for(let a=Math.PI;a<=2*Math.PI+0.01;a+=Math.PI/6){line(c,450+34*Math.cos(a),96+34*Math.sin(a),450+40*Math.cos(a),96+40*Math.sin(a));}
+   const na=-Math.PI/2+defl;
+   arrow(c,450,96,450+32*Math.cos(na),96+32*Math.sin(na),VOLT,2.5);
+   label(c,'GALVANÔMETRO',450,152,MUT,10,'center');
+   label(c,'Φ = B·A·cosθ',36,44,MUT,13);
+   if(Math.abs(defl)>0.3)label(c,'▶ FLUXO VARIANDO → CORRENTE INDUZIDA!',36,268,GOOD,14);
+   else label(c,'■ fluxo quase constante → corrente fraca ou nula',36,268,MUT,13);}},
+ q6:{draw(c,t,p){clearC(c);
+   const hue=(p.f-4)/4*285,E=0.414*p.f;
+   c.strokeStyle=MUT;c.lineWidth=2;c.beginPath();c.arc(70,140,26,0,7);c.stroke();
+   c.fillStyle=`hsla(${hue},90%,60%,.35)`;c.beginPath();c.arc(70,140,18,0,7);c.fill();
+   label(c,'FONTE',70,186,MUT,11,'center');
+   for(let k=0;k<5;k++){
+     const x=100+((t*140+k*110)%440);
+     c.strokeStyle=`hsl(${hue},95%,62%)`;c.lineWidth=2;c.beginPath();
+     for(let u=0;u<=26;u+=2){u===0?c.moveTo(x-26+u,140+6*Math.sin(u*0.7+k)):c.lineTo(x-26+u,140+6*Math.sin(u*0.7+k));}
+     c.stroke();
+     c.fillStyle=`hsl(${hue},95%,65%)`;c.beginPath();c.arc(x,140,4,0,7);c.fill();}
+   label(c,`f = ${p.f.toFixed(2).replace('.',',')}×10¹⁴ Hz`,300,60,MUT,14);
+   label(c,`E = h·f = 4,14×10⁻¹⁵ × ${p.f.toFixed(2).replace('.',',')}×10¹⁴`,300,90,MUT,13);
+   label(c,`E = ${E.toFixed(2).replace('.',',')} eV`,300,124,VOLT,20);
+   label(c,'vermelho ← frequência → violeta',36,268,MUT,11);
+   c.fillStyle='#ff5f4d';c.fillRect(36,244,60,6);c.fillStyle='#b48cff';c.fillRect(96,244,60,6);}},
+ q7:{st:{ph:[],el:[],acc:0},draw(c,t,p){clearC(c);const s=this.st;
+   const hue=(p.f-4)/4*285,E=0.414*p.f,ok=E>=2.0;
+   c.fillStyle='#5a6b7d';c.fillRect(148,60,20,160);
+   c.fillStyle='rgba(90,107,125,.4)';c.fillRect(152,60,4,160);
+   label(c,'METAL (Φ = 2,0 eV)',158,52,MUT,11,'center');
+   if(!reduced){
+     s.acc+=DT;const gap=0.9/p.I;
+     if(s.acc>gap){s.acc=0;s.ph.push({x:20,y:80+Math.random()*120,done:false});}
+     s.ph.forEach(ph=>{ph.x+=160*DT;
+       if(ph.x>=148&&!ph.done){ph.done=true;
+         if(ok)s.el.push({x:172,y:ph.y,v:46+(E-2)*66});}}
+     s.ph=s.ph.filter(ph=>ph.x<150);
+     s.el.forEach(el=>el.x+=el.v*DT);s.el=s.el.filter(el=>el.x<560);}
+   else{for(let k=0;k<4;k++){const x=30+k*30;
+     c.strokeStyle=`hsl(${hue},95%,62%)`;c.lineWidth=2;line(c,x,100+k*20,x+18,100+k*20);}
+     if(ok)for(let k=0;k<3;k++){c.fillStyle=CYAN;c.beginPath();c.arc(220+k*60,120+k*30,5,0,7);c.fill();}}
+   s.ph.forEach(ph=>{
+     c.strokeStyle=`hsl(${hue},95%,62%)`;c.lineWidth=2;
+     c.beginPath();for(let u=0;u<=20;u+=2){u===0?c.moveTo(ph.x-20+u,ph.y+5*Math.sin(u*0.8)):c.lineTo(ph.x-20+u,ph.y+5*Math.sin(u*0.8));}c.stroke();});
+   s.el.forEach(el=>{c.fillStyle=CYAN;c.beginPath();c.arc(el.x,el.y,5,0,7);c.fill();
+     label(c,'e⁻',el.x+8,el.y+4,CYAN,9);});
+   label(c,`E_fóton = ${E.toFixed(2).replace('.',',')} eV · Φ = 2,0 eV`,220,44,MUT,13);
+   if(ok){label(c,`E_c máx = ${E.toFixed(2).replace('.',',')} − 2,0 = ${(E-2).toFixed(2).replace('.',',')} eV`,220,262,GOOD,13);
+     label(c,`intensidade = ${p.I} → ${p.I} fóton(s) por rajada`,220,74,VOLT,12);}
+   else label(c,'⛔ E < Φ → NENHUM ELÉTRON EJETADO (aumente f!)',220,262,BAD,13);}},
+ q8:{draw(c,t,p){clearC(c);
+   const E=n=>-13.6/(n*n),R=n=>[0,36,62,88,114][n];
+   const TR=[[3,2],[2,1],[4,2],[3,1]];
+   const [ni,nf]=TR[p.tr],dE=E(nf)-E(ni),cx=170,cy=150;
+   c.fillStyle=PINK;c.beginPath();c.arc(cx,cy,10,0,7);c.fill();
+   c.fillStyle='#1a0d12';c.font='700 9px "JetBrains Mono"';c.textAlign='center';c.fillText('+',cx,cy+3);c.textAlign='left';
+   for(let n=1;n<=4;n++){c.strokeStyle='rgba(88,230,255,.4)';c.lineWidth=1.5;
+     c.beginPath();c.arc(cx,cy,R(n),0,7);c.stroke();
+     label(c,`n=${n}  ${E(n).toFixed(2).replace('.',',')} eV`,cx+R(n)+8,cy-6,MUT,10);}
+   const cyc=reduced?0.9:t%3,cur=cyc<1.5?ni:nf,ang=t*2.1;
+   const ex=cx+R(cur)*Math.cos(ang),ey=cy+R(cur)*Math.sin(ang);
+   c.fillStyle=CYAN;c.beginPath();c.arc(ex,ey,6,0,7);c.fill();
+   if(cyc>=1.5&&cyc<2.6&&!reduced){
+     const L=(cyc-1.5)*220;
+     c.strokeStyle=VOLT;c.lineWidth=2;c.beginPath();
+     for(let u=0;u<=L;u+=3){const y=cy-40+7*Math.sin(u*0.45);u===0?c.moveTo(300+u,y):c.lineTo(300+u,y);}
+     c.stroke();arrow(c,300+L,cy-40,312+L,cy-40,VOLT,2);}
+   label(c,`SALTO n=${ni} → n=${nf}`,36,40,MUT,14);
+   label(c,`ΔE = E_f − E_i = ${E(nf).toFixed(2).replace('.',',')} − (${E(ni).toFixed(2).replace('.',',')})`,36,66,MUT,13);
+   label(c,`fóton ${dE<0?'EMITIDO':'ABSORVIDO'} com ${Math.abs(dE).toFixed(2).replace('.',',')} eV`,36,268,VOLT,16);}},
+ q9:{st:{kd:Array.from({length:64},()=>{const u=Math.random();return Math.min(-Math.log2(1-u*0.999),4);})},
+   draw(c,t,p){clearC(c);const s=this.st;
+   const k=p.t/8,rest=100*Math.pow(2,-k);
+   for(let r=0;r<8;r++)for(let col=0;col<8;col++){
+     const idx=r*8+col,x=60+col*26,y=80+r*26,alive=s.kd[idx]>=k;
+     c.fillStyle=alive?GRN:'rgba(143,168,189,.22)';
+     c.beginPath();c.arc(x,y,alive?8:5,0,7);c.fill();}
+   label(c,'verde = núcleo ainda radioativo',60,268,MUT,11);
+   label(c,'T½ = 8 dias · m₀ = 100 g',300,90,MUT,13);
+   label(c,`meias-vidas: n = ${p.t}/8 = ${k.toFixed(2).replace('.',',')}`,300,118,MUT,13);
+   label(c,'m = m₀/2ⁿ',300,150,CYAN,15);
+   label(c,`m = 100/2^${k.toFixed(2).replace('.',',')} = ${rest.toFixed(2).replace('.',',')} g`,300,182,VOLT,18);
+   c.strokeStyle=MUT;c.lineWidth=1.5;line(c,300,210,530,210);
+   c.fillStyle=VOLT;c.fillRect(300,202,230*Math.pow(2,-k),16);
+   c.strokeStyle='rgba(143,168,189,.5)';c.strokeRect(300,202,230,16);
+   label(c,'fração restante',300,238,MUT,10);}},
+ q10:{draw(c,t,p){clearC(c);
+   const m=p.m,E=m*1e-3*9e16,kt=E/4.184e12;
+   const pul=reduced?1:1+0.06*Math.sin(t*4);
+   const w=30+m*10;
+   c.strokeStyle=VOLT;c.lineWidth=2;
+   for(let k=0;k<14;k++){
+     const a=k*Math.PI*2/14,L=(34+m*16)*pul;
+     line(c,280+(w/2+14)*Math.cos(a),140+(w/2+14)*Math.sin(a),280+(w/2+14+L)*Math.cos(a),140+(w/2+14+L)*Math.sin(a));}
+   c.fillStyle=PANEL;c.strokeStyle=PINK;c.lineWidth=2.5;
+   c.beginPath();c.roundRect?c.roundRect(280-w/2,140-w/2,w,w,6):c.rect(280-w/2,140-w/2,w,w);c.fill();c.stroke();
+   label(c,`${m.toFixed(1).replace('.',',')} g`,280,145,PINK,13,'center');
+   label(c,`E = m·c² = ${m.toFixed(1).replace('.',',')}×10⁻³ × (3×10⁸)²`,36,44,MUT,13);
+   label(c,`E = ${expStr(E)} J`,36,78,VOLT,20);
+   label(c,`≈ ${kt>=1?kt.toFixed(0):kt.toFixed(1).replace('.',',')} kt de TNT`,36,268,BAD,14);
+   label(c,'1 kt de TNT = 4,18×10¹² J',420,268,MUT,10,'right');}}
+};
+
+/* ================= ÁTOMO DO HERO ================= */
+function drawAtom(ctx,t){
+  ctx.clearRect(0,0,560,300);
+  const cx=210,cy=155;
+  ctx.fillStyle=PINK;
+  [[-6,-4],[4,-7],[-2,5],[7,3],[0,-1],[-8,4]].forEach(o=>{ctx.beginPath();ctx.arc(cx+o[0],cy+o[1],6,0,7);ctx.fill();});
+  const orbs=[55,90,125],ws=[1.9,1.25,0.85];
+  orbs.forEach((r,i)=>{
+    ctx.strokeStyle='rgba(88,230,255,.4)';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.ellipse(cx,cy,r,r*0.94,0,0,7);ctx.stroke();
+    const a=reduced? i*2.1 : t*ws[i]+i*2.1;
+    const ex=cx+r*Math.cos(a),ey=cy+r*0.94*Math.sin(a);
+    ctx.fillStyle=CYAN;ctx.beginPath();ctx.arc(ex,ey,5.5,0,7);ctx.fill();});
+  if(!reduced){
+    const ph=(t%3)/3;
+    ctx.strokeStyle=`rgba(255,225,77,${1-ph})`;ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(cx,cy,90+ph*70,0,7);ctx.stroke();
+    const dir=-0.5,px=cx+90*Math.cos(-0.9)+ph*180*Math.cos(dir),py=cy+85*Math.sin(-0.9)+ph*180*Math.sin(dir);
+    ctx.strokeStyle=VOLT;ctx.lineWidth=2;ctx.beginPath();
+    for(let u=0;u<=26;u+=2){const ox=px-26*Math.cos(dir)+u*Math.cos(dir),oy=py-26*Math.sin(dir)+u*Math.sin(dir)+5*Math.sin(u*0.8+t*6);
+      u===0?ctx.moveTo(ox,oy):ctx.lineTo(ox,oy);}
+    ctx.stroke();}
+  ctx.font='600 11px "JetBrains Mono",monospace';ctx.fillStyle=MUT;ctx.textAlign='center';
+  ctx.fillText('elétron salta de nível → emite FÓTON',280,286);ctx.textAlign='left';
+}
+
+/* ================= ESTADO / RENDER ================= */
+let score=0,done=0;const answers=Array(Q.length).fill(null);
+const simList=[];const qwrap=document.getElementById('qwrap');
+const LTR=['A','B','C','D','E'];
+
+function renderQuestions(){
+  qwrap.innerHTML='';
+  Q.forEach((q,i)=>{
+    const art=document.createElement('article');
+    art.className='qcard reveal';art.id='q'+i;
+    art.innerHTML=`
+      <div class="q-head">
+        <span class="q-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="q-topic">${q.topic}</span>
+        <span class="q-pts">VALOR: 1,0 PT</span>
+      </div>
+      <p class="q-text">${q.text}</p>
+      <div class="sim-wrap">
+        <p class="sim-label">SIMULADOR INTERATIVO — EXPERIMENTE OS SLIDERS</p>
+        <canvas id="cv${i}" width="560" height="280" aria-label="Simulação: ${q.topic}"></canvas>
+        <div class="controls">
+          ${q.sliders.map(s=>`
+            <div class="ctl">
+              <label for="sl-${i}-${s.k}">${s.l}${s.k==='tr'?'':` <output id="out-${i}-${s.k}">${s.val}${s.u}</output>`}</label>
+              <input type="range" id="sl-${i}-${s.k}" min="${s.min}" max="${s.max}" step="${s.step}" value="${s.val}">
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="opts" role="group" aria-label="Alternativas da questão ${i+1}">
+        ${q.opts.map((o,j)=>`<button class="opt" data-j="${j}"><span class="letter">${LTR[j]}</span><span>${o}</span></button>`).join('')}
+      </div>
+      <div class="q-foot"><button class="check" disabled>CONFERIR RESPOSTA ✓</button></div>
+      <div class="fb-slot"></div>`;
+    qwrap.appendChild(art);
+
+    const params={};
+    q.sliders.forEach(s=>{
+      params[s.k]=s.val;
+      const el=document.getElementById(`sl-${i}-${s.k}`),out=document.getElementById(`out-${i}-${s.k}`);
+      if(s.k==='tr'){
+        el.addEventListener('input',()=>{params.tr=+el.value;
+          if(reduced&&sim.active)SIMS['q'+(i+1)].draw(sim.ctx,1.7,params);});
+        el.setAttribute('aria-label','escolha o salto quântico');
+      }else{
+        el.addEventListener('input',()=>{params[s.k]=parseFloat(el.value);out.textContent=el.value+s.u;
+          if(reduced&&sim.active)SIMS['q'+(i+1)].draw(sim.ctx,1.7,params);});}
+    });
+
+    const cv=document.getElementById('cv'+i),dpr=Math.min(window.devicePixelRatio||1,2);
+    cv.width=560*dpr;cv.height=280*dpr;
+    const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
+    const key='q'+(i+1);
+    const sim={key,ctx,params,active:false};SIMS[key].p=params;simList.push(sim);
+    new IntersectionObserver(es=>es.forEach(e=>sim.active=e.isIntersecting),{rootMargin:'80px'}).observe(cv);
+
+    const opts=art.querySelectorAll('.opt'),check=art.querySelector('.check');
+    opts.forEach(b=>b.addEventListener('click',()=>{
+      if(art.dataset.locked)return;
+      opts.forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');answers[i]=+b.dataset.j;check.disabled=false;
+    }));
+    check.addEventListener('click',()=>{
+      if(answers[i]===null||art.dataset.locked)return;
+      lock(i,art,opts);
+    });
+  });
+  if(reduced){setTimeout(()=>simList.forEach(s=>SIMS[s.key].draw(s.ctx,1.7,s.params)),350);}
+  observeReveals();
+}
+
+function lock(i,art,opts){
+  art.dataset.locked='1';
+  const q=Q[i],sel=answers[i],ok=sel===q.correct;
+  opts.forEach((b,j)=>{b.disabled=true;
+    if(j===q.correct)b.classList.add('ok');
+    else if(j===sel)b.classList.add('no');});
+  art.querySelector('.check').style.display='none';
+  if(ok)score++;
+  done++;updateTop();
+  art.querySelector('.fb-slot').innerHTML=`
+    <div class="fb ${ok?'ok':'no'}">
+      <div class="fb-banner">${ok?'✔ CORRETO! +1,0 ponto — excelente raciocínio.':`✘ NÃO FOI DESSA VEZ — a alternativa correta é a ${LTR[q.correct]}.`}</div>
+      <div class="fb-body">
+        <div class="fb-prof"><span class="dot">AD</span><span><b>Prof. Anderson Daniel:</b> ${ok?'Muito bem! ':''}${q.prof}</span></div>
+        <h4>▤ RESOLUÇÃO PASSO A PASSO</h4>
+        <ol class="steps">${q.steps.map((s,k)=>`<li style="animation-delay:${reduced?0:.15+k*.28}s">${s}</li>`).join('')}</ol>
+        <div class="fb-key"><b>🧠 CONCEITO-CHAVE ·</b> ${q.key}</div>
+        <div class="fb-tip"><b>🎯 NO DIA DO EXAME ·</b> ${q.tip}</div>
+      </div>
+    </div>`;
+  if(done===Q.length)setTimeout(showResults,reduced?100:700);
+}
+
+function updateTop(){
+  document.getElementById('tdone').textContent=done;
+  document.getElementById('tscore').textContent=score.toFixed(1).replace('.',',');
+  document.getElementById('pfill').style.width=(done*10)+'%';
+}
+
+function showResults(){
+  const sec=document.getElementById('resultado');sec.style.display='block';
+  const nota=score;let title,msg;
+  if(nota===10){title='🏆 GABARITOU! NOTA 10,0!';msg='O Prof. Anderson Daniel assinaria embaixo dessa prova. Você dominou Eletricidade e Física Moderna — vá ao exame oficial com a confiança de quem já venceu.';}
+  else if(nota>=8){title='🌟 EXCELENTE DESEMPENHO!';msg='Faltou muito pouco para a perfeição. Revise os tópicos marcados abaixo e você chega ao exame oficial em estado de excelência.';}
+  else if(nota>=6){title='💪 BOM RESULTADO!';msg='Base sólida construída! Agora é lapidar: releia o passo a passo das questões erradas e repita as simulações até o conceito "clicar".';}
+  else if(nota>=4){title='📈 VOCÊ ESTÁ NO CAMINHO!';msg='Metade já é seu. Volte à Rota de Revisão, refaça as simulações com calma e tente de novo — recuperar é revisitar, não recomeçar.';}
+  else{title='🌱 CALMA: TODO GRANDE CIENTISTA COMEÇOU ASSIM';msg='O simulado existe exatamente para isso: errar aqui, aprender agora e acertar no exame. Revise os 5 pilares, brinque com os sliders e refaça quantas vezes precisar.';}
+  document.getElementById('rtitle').textContent=title;
+  document.getElementById('rmsg').textContent=msg;
+  document.getElementById('rlist').innerHTML=Q.map((q,i)=>`<div class="res-item ${answers[i]===q.correct?'ok':'no'}">${answers[i]===q.correct?'✔':'✘'} Q${String(i+1).padStart(2,'0')} · ${q.topic}</div>`).join('');
+  document.getElementById('rgab').innerHTML='GABARITO OFICIAL → '+Q.map((q,i)=>`<b>${LTR[q.correct]}</b>`).join(' · ');
+  setTimeout(()=>{sec.scrollIntoView({behavior:reduced?'auto':'smooth',block:'center'});},80);
+  requestAnimationFrame(()=>{document.getElementById('ringfg').style.strokeDashoffset=502-(502*nota/10);});
+  countUp(document.getElementById('rnota'),nota);
+  if(nota>=7&&!reduced)confetti();
+}
+function countUp(el,val){
+  if(reduced){el.textContent=val.toFixed(1).replace('.',',');return;}
+  const t0=performance.now(),dur=1300;
+  (function f(now){const p=Math.min((now-t0)/dur,1),e=1-Math.pow(1-p,3);
+    el.textContent=(val*e).toFixed(1).replace('.',',');
+    if(p<1)requestAnimationFrame(f);})(t0);
+}
+function confetti(){
+  const card=document.getElementById('rescard'),cols=[CYAN,VOLT,PINK,GRN,GOOD,BLUE];
+  for(let i=0;i<34;i++){
+    const s=document.createElement('span');s.className='confetti';
+    s.style.left=Math.random()*100+'%';s.style.background=cols[i%cols.length];
+    s.style.animationDelay=(Math.random()*1.1)+'s';s.style.transform=`rotate(${Math.random()*360}deg)`;
+    card.appendChild(s);setTimeout(()=>s.remove(),4200);
+  }
+}
+document.getElementById('retry').addEventListener('click',()=>{
+  score=0;done=0;answers.fill(null);updateTop();
+  simList.length=0;renderQuestions();
+  document.getElementById('resultado').style.display='none';
+  document.getElementById('ringfg').style.strokeDashoffset=502;
+  document.getElementById('prova').scrollIntoView({behavior:reduced?'auto':'smooth'});
+});
+
+/* ================= EFEITOS ================= */
+const revObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');revObs.unobserve(e.target);}}),{threshold:.12});
+function observeReveals(){document.querySelectorAll('.reveal:not(.in)').forEach(el=>revObs.observe(el));}
+
+function scramble(el){
+  const txt=el.dataset.text;
+  if(reduced){el.textContent=txt;return;}
+  const chars='#ΣΔΩπ%&$@!?01<>*';let fr=0;
+  const iv=setInterval(()=>{
+    let out='';
+    for(let i=0;i<txt.length;i++){
+      out+= txt[i]===' '?' ':(i<fr/2.4?txt[i]:chars[(Math.random()*chars.length)|0]);}
+    el.textContent=out;fr++;
+    if(fr/2.4>txt.length){el.textContent=txt;clearInterval(iv);}
+  },30);
+}
+setTimeout(()=>scramble(document.getElementById('scr1')),300);
+setTimeout(()=>scramble(document.getElementById('scr2')),700);
+
+const mt=document.getElementById('mtrack');mt.innerHTML+=mt.innerHTML;
+
+let secs=0;
+setInterval(()=>{secs++;const m=String(Math.floor(secs/60)).padStart(2,'0'),s=String(secs%60).padStart(2,'0');
+  document.getElementById('clock').textContent=`⏱ ${m}:${s}`;},1000);
+
+const tb=document.getElementById('topbtn');
+window.addEventListener('scroll',()=>tb.classList.toggle('show',window.scrollY>700),{passive:true});
+tb.addEventListener('click',()=>window.scrollTo({top:0,behavior:reduced?'auto':'smooth'}));
+
+/* ================= LOOP ================= */
+const atomCv=document.getElementById('atom');
+const actx=atomCv.getContext('2d');
+const adpr=Math.min(window.devicePixelRatio||1,2);
+atomCv.width=560*adpr;atomCv.height=300*adpr;actx.setTransform(adpr,0,0,adpr,0,0);
+let atomActive=true;
+new IntersectionObserver(es=>es.forEach(e=>atomActive=e.isIntersecting)).observe(atomCv);
+
+function loop(now){
+  const t=now/1000;
+  if(atomActive)drawAtom(actx,t);
+  for(const s of simList){if(s.active)SIMS[s.key].draw(s.ctx,t,s.params);}
+  requestAnimationFrame(loop);
+}
+renderQuestions();
+if(!reduced)requestAnimationFrame(loop);else drawAtom(actx,0);
+</script>
+</body>
+</html>
